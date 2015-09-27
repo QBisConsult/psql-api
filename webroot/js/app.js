@@ -606,9 +606,10 @@ app
     });
     
     $scope.next = function(){
+    	console.log($scope.ls);
     	$scope.ls=$scope.ls+1;
-    	$scope.firstload=1
-    	};
+    	if($scope.ls>3){$scope.firstload=1}
+    };
 
     $scope.setfirstpass = function(tu,tp,rtp){
     	$scope.errmsg = "";
@@ -666,7 +667,12 @@ app
 				$scope.rtp = "";
 				$scope.cms = "";
 			};
-			if (localStorage.ast){ $scope.tlogin('1','2',localStorage.ast)};
+			//console.log(response);
+			if (response.data.isnew){
+				localStorage.username ="";
+				localStorage.ast = "";
+				return $scope.firstload = 0}
+			if (localStorage.ast){ return $scope.tlogin('1','2',localStorage.ast)};
 		};
     	};
     	var req = {
