@@ -13,10 +13,13 @@ Requirements:
 
 Unzip the server archive.
 Run this inside the new server folder:   
+
 sudo npm install
 
 Run the server with:
+
 node start.js
+
 This server will open two ports, one for administration on HTTPS (443) and another for API requests.
 The server can be managed at:  https://<server Ip or domain name>
 It will generate a self-signed SSL certificate at start until you will provide an authorized one.
