@@ -58,9 +58,13 @@ r.all('/rapid/*',function(req,res){
 process.rapidcfg 	 = cfg.rapidcfg();
 process.rapidcfg.env 	 = cfg.rapidenv();
 process.rapidcfg.ipallow = JSON.parse(fs.readFileSync('ipallow.json').toString())
-//console.log(process.rapidcfg.rpdp);
+cfg.checkssl(load_dbinf)
 
-cfg.loadmdb(process.rapidcfg,start) // START
+function load_dbinf(err){
+	if(err){return}
+	cfg.loadmdb(process.rapidcfg,start) // START
+	
+};
 
 function start(){
 	var sslOptions 	= {
