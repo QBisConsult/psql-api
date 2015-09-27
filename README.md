@@ -1,7 +1,7 @@
 # psql-api
 RADIP RESTful API for PostgreSQL
 
-Installation
+INSTALLATION
 
 Requirements:
 
@@ -32,5 +32,29 @@ You can change the server port and protocol (HTTP/HTTPS) for API access from set
 Please check the SSL documentation page for more information.
 
 See SETTINGS chapter for this server SSL setup after installation.
+
+FEATURES
+
+Implements all CRUD operations (CREATE, READ, UPDATE, DELETE).
+Automatically imports the database structure and create a metadata of your database.Single point access, accept POST/PUT/GET/DELETE http methods and respond with a JSON data object.
+
+Basic operations can be used from the start:
+
+    CREATE - insert records
+    READ - read one record by ID
+    UPDATE - update one record
+    DELETE - delete one record
+
+The servers accepts batch of different commands at once and uses transactions by default.
+
+Inject your code BEFORE and AFTER operations in order to customize access to each action.
+
+Create queries and access them with simple GET commands.
+
+Current version can be set to access data from one PostgreSQL server.
+
+This RESTful API server can be used to offer WEB services for various kind of applications and devices over HTTP/HTTPS protocol like WEB, mobile or IoT applications  that consumes WEB services.
+
+
 
 License open source MIT
