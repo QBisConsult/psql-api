@@ -1,0 +1,96 @@
+<div style="margin-left:10px; width:95%;" ng-controller="RulesCtrl">
+  <h4 style="color:SteelBlue">
+	
+  </h4>
+  <!--<div class="div-cnt4" style="width:150px;float:right;border: 0px solid">
+  	<p> Code: </p>
+	<p><button type="button" class="btn btn-info" ng-click="" style="width:100%">Before</button></p>
+	<p><button type="button" class="btn btn-info" ng-click="" style="width:100%">After</button></p>
+	<p><button type="button" class="btn btn-info" ng-click="" style="width:100%">Authorization</button></p>
+	<p><button type="button" class="btn btn-info" ng-click="" style="width:100%">Help</button></p>
+  </div> -->
+  <div class="div-cnt4" style="border: 0px solid">
+	<p style="color:lightblue">&nbsp<span style="color:steelblue;font-size:large">Rules Code:</span>&nbsp&nbsp&nbsp&nbsp|&nbsp
+	<a ng-click="loadfile('rpdbefore')" ng-show="showmenu.bef">BEFORE</a>&nbsp|&nbsp
+	<a ng-click="loadfile('rpdafter')" ng-show="showmenu.aft">AFTER</a>&nbsp|&nbsp
+	<a ng-click="loadfile('rpdauth')" ng-show="showmenu.aut">AUTHORIZATION</a>&nbsp|&nbsp
+	<a ng-click="cback()" ng-show="showmenu.bac">↶ BACK</a>&nbsp|&nbsp
+	<a ng-click="gethelp()">Help</a>&nbsp|&nbsp
+	&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a ng-click="publish()" ng-show="showmenu.pub">✓PUBLISH</a>&nbsp&nbsp
+	<a ng-click="checkfunc()" ng-show="showmenu.chk">♯ CHECK</a>&nbsp&nbsp
+	<span ng-show="showmenu.chk" style="color:navy">Published:{{published}}</span>
+	<span ><a ng-show="showmenu.mod" ng-click="savecode()">✓SAVE</a>&nbsp&nbsp<a ng-click="cancelcode()" ng-show="showmenu.mod">✗ CANCEL</a></span>
+		<!--<span style="color:coral" ng-hide="csql.inuse">* not validated SQL, ...<span> -->
+	</p>
+  </div><br>
+  <span ng-show="showerror" style="color:red"> Errors: (server reported)</span>
+  <span ng-show="showerror" style="color:green">{{pubmessage}}</span>
+  <div class="div-cnt4" style="height:200px;width:100%;border: 0px solid" ng-show = "showerror">
+		<div ng-model="cerr" 
+			ui-ace="{
+			  useWrapMode : true,
+			  showGutter: true,
+			  theme:'twilight',
+			  mode: 'text',
+			  fontSize:14,
+			  firstLineNumber: 1,
+			  onLoad: aceLoaded2
+			}" ></div> 
+  </div>
+  <div class="div-cnt4" style="position:absolute;padding-top:20px;height:95%;width:95%;border: 0px solid" ng-show = "showcode">
+		<div ng-model="ccode" ng-change="changecode()" 
+			ui-ace="{
+			  useWrapMode : true,
+			  showGutter: true,
+			  theme:'iplastic',
+			  mode: 'javascript',
+			  fontSize:14,
+			  firstLineNumber: 1,
+			  onLoad: aceLoaded2
+			}" ></div> 
+  </div>
+  <div class="div-cnt4" style="background:solid height:530px;width:100%;border: 0px solid;color:grey" ng-show = "showhelp">
+  	<p>&nbsp</p>
+  	<a ng-click="hback()" >↶BACK</a>
+  	<h4>
+  		Help
+  	</h4>	
+  	<p>RULES code reffers to javascript functions that will run server side (backend) in different circumstances to validate predefined actions. A special action is related to server security and controls user AUTHORIZATION, please read HELP documentation about default authorization method and how to implement custom methods.</p>
+  	<p>RAPID REST API server operations are CRUD operations translated to CREATE - READ - UPDATE - DELETE. We can implement rules to run BEFORE and AFTER default code runs, that allows a better control on server behaviour.</p>
+  	
+  	<p>Menu: <br>
+  	
+  	Chose one rule file (BEFORE, AFTER, AUTHORIZATION)<br>
+  	When changed the SAVE/CANCEL menu is shown.<br>
+  	Press CHECK to verify if the file does not trigger an error when required.<br>
+  	Press PUBLISH to move the file as resource for the server (available if CHECK returns OK).</p>
+  	
+  	<p>Conventions:</p>
+  	<p>- name of the function should be the name of the database table + its action like 'usersCreate','usersFind','usersUpdate', 'usersDelete' (where 'users' is our table in this sample)<br>
+  	- parameters are (req,atr,next)<br>
+  	&nbsp&nbsp&nbsp- 'req' the client request (Express request)<br>
+  	&nbsp&nbsp&nbsp- 'atr' attributes (function parameters sent to the server)<br>
+  	&nbsp&nbsp&nbsp- 'next' the callback function</p>
+  	
+  	<p>Sample:</p>
+  	<pre>
+  	// BEFORE functions
+  	module.export = {
+  		...
+	  	usersCreate: function(req,atr,next){
+	  		atr.id = myfunction(); // create custom ID
+	  		if (!atr.email){return next({error:"email required"});
+	  		next()
+	  	},
+  		...
+  	}
+  	</pre>
+  	
+  	<p>Please read the attached documentation for more information. 
+  	
+  	
+  	
+  	
+  	
+  </div>
+</div>

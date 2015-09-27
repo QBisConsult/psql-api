@@ -1,0 +1,554 @@
+<!doctype html>  
+<!--[if IE 6 ]><html lang="en-us" class="ie6"> <![endif]-->
+<!--[if IE 7 ]><html lang="en-us" class="ie7"> <![endif]-->
+<!--[if IE 8 ]><html lang="en-us" class="ie8"> <![endif]-->
+<!--[if (gt IE 7)|!(IE)]><!-->
+<html lang="en-us"><!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	
+	<title>RAPID  - API RESTful server for PostgreSQL</title>
+	
+	<meta name="description" content="A RESTful API for PostgreSQL databases.
+CRUD operations and more">
+	<meta name="author" content="Q-Bis Consult S.R.L.">
+	<meta name="copyright" content="Q-Bis Consult S.R.L.">
+	<meta name="generator" content="Documenter v2.0 http://rxa.li/documenter">
+	<meta name="date" content="2015-09-26T00:00:00+02:00">
+	
+	<link rel="stylesheet" href="assets/css/documenter_style.css" media="all">
+	<link rel="stylesheet" href="assets/js/google-code-prettify/prettify.css" media="screen">
+	<script src="assets/js/google-code-prettify/prettify.js"></script>
+
+	
+	
+	<script src="assets/js/jquery.js"></script>
+	
+	<script src="assets/js/jquery.scrollTo.js"></script>
+	<script src="assets/js/jquery.easing.js"></script>
+	
+	<script>document.createElement('section');var duration='100',easing='swing';</script>
+	<script src="assets/js/script.js"></script>
+	
+	<style>
+		html{background-color:#FFFFFF;color:#383838;}
+		::-moz-selection{background:#444444;color:#DDDDDD;}
+		::selection{background:#444444;color:#DDDDDD;}
+		#documenter_sidebar #documenter_logo{background-image:url();}
+		a{color:#0000FF;}
+		.btn {
+			border-radius:3px;
+		}
+		.btn-primary {
+			  background-image: -moz-linear-gradient(top, #0088CC, #0044CC);
+			  background-image: -ms-linear-gradient(top, #0088CC, #0044CC);
+			  background-image: -webkit-gradient(linear, 0 0, 0 0088CC%, from(#DDDDDD), to(#0044CC));
+			  background-image: -webkit-linear-gradient(top, #0088CC, #0044CC);
+			  background-image: -o-linear-gradient(top, #0088CC, #0044CC);
+			  background-image: linear-gradient(top, #0088CC, #0044CC);
+			  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0088CC', endColorstr='#0044CC', GradientType=0);
+			  border-color: #0044CC #0044CC #bfbfbf;
+			  color:#FFFFFF;
+		}
+		.btn-primary:hover,
+		.btn-primary:active,
+		.btn-primary.active,
+		.btn-primary.disabled,
+		.btn-primary[disabled] {
+		  border-color: #0088CC #0088CC #bfbfbf;
+		  background-color: #0044CC;
+		}
+		hr{border-top:1px solid #D3EFF0;border-bottom:1px solid #FFFFFF;}
+		#documenter_sidebar, #documenter_sidebar ul a{background-color:#DDDDDD;color:#222222;}
+		#documenter_sidebar ul a{-webkit-text-shadow:1px 1px 0px #EEEEEE;-moz-text-shadow:1px 1px 0px #EEEEEE;text-shadow:1px 1px 0px #EEEEEE;}
+		#documenter_sidebar ul{border-top:1px solid #AAAAAA;}
+		#documenter_sidebar ul a{border-top:1px solid #EEEEEE;border-bottom:1px solid #AAAAAA;color:#444444;}
+		#documenter_sidebar ul a:hover{background:#444444;color:#DDDDDD;border-top:1px solid #444444;}
+		#documenter_sidebar ul a.current{background:#444444;color:#DDDDDD;border-top:1px solid #444444;}
+		#documenter_copyright{display:block !important;visibility:visible !important;}
+	</style>
+	
+</head>
+<body class="documenter-project-rapid-">
+	<div id="documenter_sidebar">
+		<a href="#documenter_cover" id="documenter_logo"></a>
+		<ul id="documenter_nav">
+			<li><a class="current" href="#documenter_cover">Start</a></li>
+				
+			<li><a href="#features_overview" title="Features overview">Features overview</a></li>
+			<li><a href="#about" title="About">About</a></li>
+			<li><a href="#installation" title="Installation">Installation</a></li>
+			<li><a href="#start_page" title="Start page">Start page</a></li>
+			<li><a href="#settings" title="Settings">Settings</a></li>
+			<li><a href="#security" title="Security">Security</a></li>
+			<li><a href="#ssl" title="SSL">SSL</a></li>
+			<li><a href="#authorization" title="Authorization">Authorization</a></li>
+			<li><a href="#json_web_tokens_jwt" title="JSON WEB TOKENS (JWT)">JSON WEB TOKENS (JWT)</a></li>
+			<li><a href="#cors" title="CORS">CORS</a></li>
+			<li><a href="#api_crud_operations" title="API - CRUD operations">API - CRUD operations</a></li>
+			<li><a href="#sample_testing" title="Sample testing">Sample testing</a></li>
+			<li><a href="#rules_before_after" title="Rules (before & after)">Rules (before & after)</a></li>
+
+		</ul>
+		<div id="documenter_copyright">Copyright Q-Bis Consult S.R.L. 2015<br>
+		made with the <a href="http://rxa.li/documenter">Documenter v2.0</a> 
+		</div>
+	</div>
+	<div id="documenter_content">
+	<section id="documenter_cover">
+	<h1>RAPID </h1>
+	<h2>API RESTful server for PostgreSQL</h2>
+	<div id="documenter_buttons">
+		<a href="http://www.nedcosafe.com" class="btn btn-primary btn-large">Support</a> 
+	</div>
+	<hr>
+	<ul>
+	<li>created: 09/04/2015</li>
+	<li>latest update: 09/26/2015</li>
+	<li>by: Q-Bis Consult S.R.L.</li>
+	<li><a href=""></a></li>
+	<li>email: <a href="mailto:&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#113;&#98;&#105;&#115;&#46;&#114;&#111;">&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#113;&#98;&#105;&#115;&#46;&#114;&#111;</a></li>
+	</ul>
+	<p>Automate all CRUD operations for your PostgreSQL databases.</p>
+	</section>
+	
+	<section id="features_overview">
+	<div class="page-header"><h3>Features overview</h3><hr class="notop"></div>
+<h2>
+	<strong>RESTful API server features</strong></h2>
+<p>
+	<strong><img alt="" src="assets/images/image_1.png" style="width: 500px; height: 330px;"></strong></p>
+<p>
+	Implements all CRUD operations (CREATE, READ, UPDATE, DELETE).<br>
+	Automatically imports the database structure and create a metadata of your database.Single point access, accept POST/PUT/GET/DELETE http methods and respond with a JSON data object.</p>
+<p>
+	Basic operations can be used from the start:</p>
+<ul>
+	<li>
+		CREATE - insert records</li>
+	<li>
+		READ - read one record by ID</li>
+	<li>
+		UPDATE - update one record</li>
+	<li>
+		DELETE - delete one record</li>
+</ul>
+<p>
+	The servers accepts batch of different commands at once and uses transactions by default.</p>
+<p>
+	Inject your code BEFORE and AFTER operations in order to customize access to each action.</p>
+<p>
+	Create queries and access them with simple GET commands.</p>
+<p>
+	Current version can be set to access data from one PostgreSQL server. If you need to access different PostgreSQL servers from a single point please check the enterprise version availability with support team at &#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#110;&#101;&#100;&#99;&#111;&#115;&#97;&#102;&#101;&#46;&#99;&#111;&#109;.</p>
+<p>
+	This RESTful API server can be used to offer WEB services for various kind of applications and devices over HTTP/HTTPS protocol like WEB, mobile or IoT applications&nbsp; that consumes WEB services.</p>
+<p>
+	One solution can scale by adding new API servers, the configuration can be shared within instances. To scale the solution a Load Balancing server is required and next just add or drop API instances to it.</p>
+</section>
+<section id="about">
+	<div class="page-header"><h3>About</h3><hr class="notop"></div>
+<p>
+	<br>
+	<strong>License</strong></p>
+<div class="content clearfix">
+	<div class="field field-name-body field-type-text-with-summary field-label-hidden">
+		<div class="field-items">
+			<div class="field-item even">
+				<p>
+					The MIT License (MIT)</p>
+				<p>
+					Copyright (c) 2015 Q-Bis Consult S.R.L.</p>
+				<p>
+					Permission is hereby granted, free of charge, to any person obtaining a copy<br>
+					of this software and associated documentation files (the &quot;Software&quot;), to deal<br>
+					in the Software without restriction, including without limitation the rights<br>
+					to use, copy, modify, merge, publish, distribute, sublicense, and/or sell<br>
+					copies of the Software, and to permit persons to whom the Software is<br>
+					furnished to do so, subject to the following conditions:</p>
+				<p>
+					The above copyright notice and this permission notice shall be included in<br>
+					all copies or substantial portions of the Software.</p>
+				<p>
+					THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR<br>
+					IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,<br>
+					FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE<br>
+					AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER<br>
+					LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,<br>
+					OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN<br>
+					THE SOFTWARE.</p>
+			</div>
+		</div>
+	</div>
+</div>
+<p>
+	<strong>About</strong></p>
+<p>
+	Developed and maintained by:</p>
+<p>
+	Q-Bis Consult S.R.L.<br>
+	<a href="http://www.qbis.ro" target="_blank">www.qbis.ro</a><br>
+	&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#113;&#98;&#105;&#115;&#46;&#114;&#111;</p>
+<p>
+	NEDCO SAFE S.R.L.<br>
+	<a href="http://www.nedcosafe.com" target="_blank">www.nedcosafe.com</a><br>
+	&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#110;&#101;&#100;&#99;&#111;&#115;&#97;&#102;&#101;&#46;&#99;&#111;&#109;</p>
+<p>
+	DANCO S.R.L.<br>
+	<a href="http://www.dancosolutions.net/">http://www.dancosolutions.net/</a><br>
+	&#111;&#102;&#102;&#105;&#99;&#101;&#64;&#100;&#97;&#110;&#99;&#111;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#110;&#101;&#116;</p>
+<p>
+	&nbsp;</p>
+<p>
+	<strong>Dependency</strong></p>
+<p>
+	RAPID API is a NodeJS application based on Express server framework. It uses next modules:</p>
+<div class="alert alert-info">
+	express, cors, pg, pg-spice, jsonwebtoken, pem, redis, skipper,buffer-crc32, debug,</div>
+</section>
+<section id="installation">
+	<div class="page-header"><h3>Installation</h3><hr class="notop"></div>
+<p>
+	<strong>RESTful API for PostgreSQL</strong></p>
+<p>
+	Requirements:</p>
+<p>
+	- OpenSSL shuld be installed before in order to allow the server to create it&#39;s first self-signed SSL certificate.<br>
+	- for Linux you will need to set your computer to accept Node opening lower ports (80/443 ...) without root access, next code works for Ubuntu</p>
+<p>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sudo apt-get install libcap2-bin<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sudo setcap cap_net_bind_service=+ep /usr/local/bin/node</p>
+<p>
+	Unzip the server archive.</p>
+<div class="alert">
+	Run this inside the new server folder:&nbsp;&nbsp;&nbsp;</div>
+<div class="alert alert-info">
+	sudo npm install</div>
+<p>
+	Run the server with:</p>
+<div class="alert alert-info">
+	node start.js</div>
+<p>
+	<strong>The server can be managed at:&nbsp; https://&lt;server Ip or domain name&gt;<br>
+	It will generate a self-signed SSL certificate at start until you will provide an authorized one.</strong></p>
+<p>
+	If OpenSSL can not be found, you may need to provide a SSL certificate otherwise the server will not start.<br>
+	Put the certificate into &quot;ssl&quot; folder as service.crt and service.key files. The SSL certificate is a PEM encoded crt file.<br>
+	<br>
+	You can change the server port and protocol (HTTP/HTTPS) for API access from settings page.</p>
+<p>
+	Please check the SSL documentation page for more information.</p>
+<p>
+	See SETTINGS chapter for this server SSL setup after installation.</p>
+<p>
+	&nbsp;</p>
+</section>
+<section id="start_page">
+	<div class="page-header"><h3>Start page</h3><hr class="notop"></div>
+<p>	Server information page.</p>
+<p>	This page will display server status or required actions to setup the server.</p>
+<p>	<img alt="StartPage" src="assets/images/image_3.png" style="width: 300px; height: 305px;"></p>
+</section>
+<section id="settings">
+	<div class="page-header"><h3>Settings</h3><hr class="notop"></div>
+<p>	Application server setup starts here.</p>
+<p>	Be sure that you can access your PostgreSQL database server by setting your firewalls and security rules to alow access from the aplication server computer/vpc. For Amazon RDS you will need to setup properly your database security group.</p>
+<p>	First action that comes with a fresh new server is to set its data access information. It is a short wizard that ask for your database connection credits. If the database is not found or can not be reached an error message is displayed.e</p>
+<p>	<strong>Database server:</strong></p>
+<p>	In order to set access to a PostgreSQL server next information are required:</p>
+<ul>	<li>		server address (IP or domain name)</li>
+	<li>		port (standard is 5433 or 5334 for RDS)</li>
+	<li>		database (a database on the server)</li>
+	<li>		user (one user that have rights to access and create databases on the server)</li>
+	<li>		password (...)</li>
+</ul>
+<p>	When used with Amazon RDS there are settings to be made on AWS console related to access security. Please check the AWS documentation.</p>
+<p>	All database server REST API configuration is stored in a database on the used PostgreSQL server (rcfg). By storing nothing important locally the system can scale simple adding new servers.</p>
+<p>	From settings page you can change administrator password or set an address for another PostgreSQL server.</p>
+<p>	<strong>System:</strong></p>
+<p>	Administrator - set the administrator name and password</p>
+<p>	RAPID API - controll the RESful API server (set properties, start /stop).</p>
+<p>	TOKEN password - used for API authorization by default. The authorization method can be changed into RULES page at choice, code for JWT authorization is provided and samples for basic authorization.</p>
+<p>	SSL Certificate - set/view the used SSL certificate.</p>
+<p>	After some changes the server is restarted automatically to apply changes that require restart (SSL, port ...)</p>
+</section>
+<section id="security">
+	<div class="page-header"><h3>Security</h3><hr class="notop"></div>
+<p>	Security is one of most concerns in today world, dealing with databases over WEB is a potential security risk that need attention from the very start of your WEB application project.</p>
+<p>	RAPID servers uses HTTPS protocol for data communication and flexible authorization methods implementing JWT by default.</p>
+<p>	Authorization is based on &quot;Authorization&quot; header provided with each request, the server is a RESTful server and does not stores any user session. It is adviced to use JWT for API access, however the authorization method can be changed to any of your choice by modifing the AUTHORIZATION js file (rpdauth.js) using RULES page.</p>
+<p>	One SSL self-signed certificate is created when the server is started first time, it can be changed at any time using settings page.</p>
+<p>	ADMIN interface has one administrator only and it is protected by a basic authorization, in plus an IP filter list can be set to allow access to ADMIN module only from particular locations.</p>
+<p>	The server will open two ports, one for administration witch is 443 and one for API access. It is reccomended to use another port than 443 for API access as 443 port is generally more exposed to benign crawlers or malicious random attack.</p>
+<p>	If port 443 can&#39;t be opened ADMIN server will try 4430 port.</p>
+<p>	Use &quot;IP filtering&quot; in settings page to protect better the ADMIN interface.</p>
+<p>	&nbsp;</p>
+</section>
+<section id="ssl">
+	<div class="page-header"><h3>SSL</h3><hr class="notop"></div>
+<p>	<a href="https://en.wikipedia.org/wiki/Transport_Layer_Security">https://en.wikipedia.org/wiki/Transport_Layer_Security</a></p>
+<p>	For a good security compliance in a production environment and to be sure that your REST API server will be accepted by all clients you will need to set a certified SSL certificate issued by an authorized CA (Certificate Authority).</p>
+<p>	SSL certificates can be issued for an IP or a Domain name, depending on your requirements you may chose from different CA providers.</p>
+<p>	OpenSSL can be used to create self signed SSL certificates or certificate requests. See next article for details.<br>
+	<a href="https://www.digitalocean.com/community/tutorials/openssl-essentials-working-with-ssl-certificates-private-keys-and-csrs">https://www.digitalocean.com/community/tutorials/openssl-essentials-working-with-ssl-certificates-private-keys-and-csrs</a></p>
+<p>	At start the server will create automatically a self signed certificate to protect the administration pages. This certificate can be used safely at start as it is unique and good enough to protect most sensitive information.</p>
+<p>	In &quot;development&quot; mode, the REST API server can be used with HTTP unprotected protocol, however when the server is set in &quot;production&quot; mode a verified certificate is needed, otherwise the server can not be used as a cross origin resource for WEB applications and mobile applications based on WEBkit.</p>
+<p>	SSL certificate can be set in SETTINGS page. There will be needed a PEM encoded CRT file and it&#39;s private key. The private KEY should have no password protection.<br>
+	&nbsp;</p>
+</section>
+<section id="authorization">
+	<div class="page-header"><h3>Authorization</h3><hr class="notop"></div>
+<p>	RAPID server is a RESTful API server, it can be set to accept any kind of authorization method by allowing custom code.</p>
+<p>	Since the server can be used in a SOA infrastructure the best option for authorization is token based.</p>
+<p>	RAPID API exposes by default&nbsp; a JSON WEB TOKEN authorization method.<br>
+	https://github.com/auth0/node-jsonwebtoken</p>
+<p>	<strong>JWT authorization</strong></p>
+<p>	To set up properly the system you will need to change the default JWT private key to the same key of your applications that uses this API server (the token emiter).</p>
+<p>	Token required by RAPID is at least &quot;user&quot;, the JWT can contain a lot of other information you may need for your application.</p>
+<p>	The &quot;user&quot; information can be used further in your RULES code for different purposes. If you will not need to differentiate your users access you may use same token for all interfaces regardles who uses the application.</p>
+<p>	Tokens can be created for different purposes in TOKENS page, (new tab/tokens).</p>
+<p>	Why JWT?</p>
+<p>	In a RESTful world each request is not related to any previous one, the server does not stores any user related information, on the other hand when used as an API provider one server may be not the same as the WEB application server so cookies can not be used properly, the solution is to provide an authorization code for each request. If authorization need to be confirmed with another service that will cost processing power. JWT solve this by checking the authorization token server side based on same settings as the token emiter. Using it along with HTTPS this is a safe standard industry authorization method.</p>
+<p>	Tokens are accepted as authorization headers or query parameter. However that can be changed in AUTHORIZATION rules (javascript code).</p>
+<div class="alert alert-info">
+	Authorization: Bearer XAIHAUIAHUIAHUUIAUYIAYJAKIHAUIHAIUHDUIHAIDUUIVAHDGUSGYU</div>
+<p>	or</p>
+<div class="alert alert-info">
+	token=XAIHAUIAHUIAHUUIAUYIAYJAKIHAUIHAIUHDUIHAIDUUIVAHDGUSGYU in a HTTPs query request</div>
+<div class="alert alert-info">
+	like https://myserver/rapid/&lt;mycommand&gt;?token=mytoken</div>
+<p>	<strong>BASIC authorization</strong></p>
+<p>	A basic authorization is based on an authorization header:</p>
+<p>	Authorization: Basic &lt;base 64 code (user:pass)&gt;</p>
+<p>	It is safe when used with HTTPS, but still the username and password need to be checked against a database.</p>
+<p>	Any authorization like OAUTH2.0 or thirdparty from Facebook or other providers can be implemented by changing the AUTHORIZATION rule with your own custom Javascript code.</p>
+<p>	Support for implementing a different authorization method can be offered by listed partners in ABOUT page at their standard development rates.</p>
+</section>
+<section id="json_web_tokens_jwt">
+	<div class="page-header"><h3>JSON WEB TOKENS (JWT)</h3><hr class="notop"></div>
+<p>	JSON WEB TOKENS or JWT</p>
+<p>	A standard authorization method for WEB API&#39;s.<br>
+	It uses the WEB request Authorization header to provide the token.</p>
+<div class="alert alert-success">
+	Authorization: Bearer JHUIHYUIBYTUIYUITU.ITVRTUIYIUT...</div>
+<p>	One token is an encrypted JSON. The emiter (authorization server) should have the same private key with the API service server, one that will check the token validity.</p>
+<p>	Tokens can have any required atributes, like USER, EMAIL, ID&#39;s, EXPIRE.</p>
+<div class="alert alert-success">
+	{<br>
+	&nbsp;&nbsp; &quot;user&quot;:&quot;test201&quot;,<br>
+	&nbsp;&nbsp; &quot;email&quot;:&quot;&#116;&#101;&#115;&#116;&#50;&#48;&#49;&#64;&#109;&#121;&#100;&#111;&#109;&#97;&#105;&#110;&#46;&#99;&#111;&#109;&quot;,<br>
+	&nbsp;&nbsp; &quot;expire&quot;: 12242094494,<br>
+	&nbsp;&nbsp; ...<br>
+	}</div>
+<p>	RAPID API server implements authorization by checking each request with the rpdauth.js auth function (see AUTHORIZATION page). The JWT Authorization token is decrypted and added to the client request as it is. By simple decrypting the token, the authorization is passed. Later any other rule can check the decrypted token object properties for application purposes like access rights, logs and any needed.</p>
+<p>	In BEFORE RULES can be used like:</p>
+<div class="alert alert-success">
+	...<br>
+	mytableCreate:function(req,atr,next){ // CREATE rule for mytable<br>
+	&nbsp;&nbsp;&nbsp; var user&nbsp;&nbsp;&nbsp; = req.token.user;&nbsp;&nbsp; // get the username to be used<br>
+	&nbsp;&nbsp;&nbsp; ...<br>
+	&nbsp;&nbsp;&nbsp; atr.userid = req.token.userid;&nbsp; // set an userid atribute to be inserted into table<br>
+	&nbsp;&nbsp;&nbsp; next();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // calback to main function when ready<br>
+	},<br>
+	...</div>
+<pre class="prettyprint lang-plain linenums">
+</pre>
+<p>	&quot;checkAll&quot; BEFORE rule can be used to check if token is expired. This will aply to all requests.</p>
+<div class="alert alert-success">
+	...<br>
+	checkAll:function(req,atr,next){<br>
+	&nbsp;&nbsp;&nbsp;&nbsp; if (!req.token.expire){return next()}<br>
+	&nbsp;&nbsp;&nbsp;&nbsp; if (req.token.expire &lt; new Date()){return next({error:&quot;expired token&quot;})}<br>
+	&nbsp;&nbsp;&nbsp;&nbsp; return next();<br>
+	}<br>
+	...</div>
+</section>
+<section id="cors">
+	<div class="page-header"><h3>CORS</h3><hr class="notop"></div>
+<p>	Cross Origin Resource Sharring&nbsp; a default standard for a Service Oriented Arhitecture.</p>
+<p>	RAPID API is CORS enabled by default.</p>
+<p>	More detail related to CORS can be found at <a href="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing">https://en.wikipedia.org/wiki/Cross-origin_resource_sharing</a>.</p>
+<p>	An API server used as a cross origin resource always should use an <strong>verified SSL certifcate</strong>, otherwise the client web browser will not accept the connection at fist place.</p>
+<p>	It is not reccomended to open and use a REST API server without encryption (HTTPS protocol).</p>
+<p>	&nbsp;</p>
+</section>
+<section id="api_crud_operations">
+	<div class="page-header"><h3>API - CRUD operations</h3><hr class="notop"></div>
+<p>	<strong>API</strong></p>
+<p>	Create, Read, Update, Delete or CRUD reffers to basic operations on databases, in plus there are options to query the database and run a batch of operations at once in a transaction.</p>
+<p>	The server do not accept free SQL&#39;s via REST API as this can be a security issue, instead each SQL you may need should be declared as SQL statement and used via a REST command. The server uses JSON data format for requests and responses. Next are described HTTP commands that can be used with the REST API server.</p>
+<p>	All CRUD operations are ready to be used without additional settings after server configuration, however if you will need more it can be done with rules for each operation and table in your databases (before and after rules).</p>
+<p>	All requests should provide next headers, one token can be set using TOKENS page, please check JSON WEB Tokens page. Authorization method can be changed.</p>
+<div class="alert alert-info">
+	Authorization:Bearer JAKHDHUBUDYUDYBUIDYBNOOIIUSDO ...<br>
+	Content-Type:application/json; charset=utf-8<br>
+	&nbsp;</div>
+<p>	server_address: your server address including port like myserver.com:3330</p>
+<p>	<strong>CREATE</strong></p>
+<p>	Insert a new record.</p>
+<p>	Request:</p>
+<ul>	<li>		method: POST</li>
+	<li>		data: req.body, accept JSON &ndash; one table row</li>
+	<li>		path: <code>&lt;server address&gt;/rapid/&lt;table&gt;</code></li>
+</ul>
+<p>	RAPID will add the primary key if not sent in request, the primary key is a standard GUID of &hellip; characters. RAPID check that each field in request belong to the table and each mandatory field in the table it is in the request (exception the PK that can be created if missing). After compliance the request is prepared and sent to the RDBMS as INSERT statement.</p>
+<p>	Sample CREATE (POST) request:</p>
+<p>	Path:</p>
+<pre class="prettyprint prettyprinted" style="">
+<code><span class="pln">http</span><span class="pun">:</span><span class="com">//testserver.com/rapid/users</span></code></pre>
+<p>	Request body:</p>
+<pre class="prettyprint prettyprinted" style="">
+<code><span class="pun">{</span><span class="str">&quot;username&quot;</span><span class="pun">:</span><span class="str">&quot;test1&quot;</span><span class="pun">,</span><span class="str">&quot;firstname&quot;</span><span class="pun">:</span><span class="str">&quot;John&quot;</span><span class="pun">,</span><span class="str">&quot;lastname&quot;</span><span class="pun">:</span><span class="str">&quot;Smith&quot;</span><span class="pun">,</span><span class="str">&quot;email&quot;</span><span class="pun">:</span><span class="str">&quot;&#115;&#111;&#109;&#101;&#111;&#110;&#101;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;&quot;</span><span class="pun">}</span></code></pre>
+<p>	<strong>READ</strong></p>
+<p>	Read a record by primary key.</p>
+<p>	FIND : Check for one record, it is enabled by default and no further actions are required to make it working.</p>
+<p>	QUERY : To return more data from the same table or from more tables, it needs preparations in form of a SQL statement saved into SQLS configuration table.</p>
+<p>	<strong>FIND</strong></p>
+<p>	RAPID uses this to check if a record exist and return its data.</p>
+<p>	Request:</p>
+<ul>	<li>		method: GET</li>
+	<li>		data: req.query, parameters</li>
+	<li>		path: <code>&lt;server address&gt;/rapid/&lt;table&gt;?&lt;PK&gt;=&lt;key value&gt;</code></li>
+</ul>
+<p>	The response is the entire row in JSON format. If you will need to control further the response in order to not return some fields just set your rules into rpdafter.js for yourtableFind (SailsJs/js/rpdafter.js).</p>
+<p>	Without parameters (pky) will return a maximum of 1000 unsorted records from the table.</p>
+<p>	<strong>UPDATE</strong></p>
+<p>	Same as CREATE, exceptions are:</p>
+<ul>	<li>		primary key should exist into request</li>
+	<li>		request method is PUT</li>
+</ul>
+<p>	Returns JSON</p>
+<p>	<strong>DELETE</strong></p>
+<p>	Request:</p>
+<ul>	<li>		method: DELETE</li>
+	<li>		data: req.query, parameter</li>
+	<li>		path: <code>&lt;server address&gt;/rapid/&lt;table&gt;?&lt;PK&gt;=&lt;key value&gt;</code></li>
+</ul>
+<p>	Can be used to mark a record as deleted instead really delete. To do that you need to have one bolean field named &lsquo;deleted&rsquo; into the table. (<em>Please set your SQL Queries accordingly if you are using &lsquo;deleted&rsquo; field mark</em>)</p>
+<p>	The response is a JSON with DELETE command result not the deleted row. Functions for before and after actions can be set into rpdafter.js and rpdbefore.js (see next chapters for details)</p>
+<p>	<strong>QUERY</strong></p>
+<p>	Allows you to run a SQL statement and return the response as JSON.<br>
+	Queries can be set using the application &quot;Queries&quot; option from a new tab. Check also in page help.</p>
+<p>	Sample SQL:</p>
+<p>	RAPID uses &lsquo;&amp;&rsquo; wildcard here to mark a parameter, this conventions comes back from ODBC or ADO queries standard. The SQL statement should respect the RDBMS standards and syntax.</p>
+<pre class="prettyprint prettyprinted" style="">
+<code><span class="kwd">select</span><span class="pln"> users</span><span class="pun">.</span><span class="pln">firstname</span><span class="pun">,</span><span class="pln"> users</span><span class="pun">.</span><span class="pln">lastname</span><span class="pun">,</span><span class="pln"> users</span><span class="pun">.</span><span class="pln">email</span><span class="pun">,</span><span class="pln">
+assets</span><span class="pun">.</span><span class="pln">assetname</span><span class="pun">,</span><span class="pln">assets</span><span class="pun">.</span><span class="pln">description
+</span><span class="kwd">from</span><span class="pln"> assets inner join users on assets</span><span class="pun">.</span><span class="pln">uid </span><span class="pun">=</span><span class="pln"> users</span><span class="pun">.</span><span class="pln">id
+order </span><span class="kwd">by</span><span class="pln"> users</span><span class="pun">.</span><span class="pln">firstname
+</span><span class="kwd">where</span><span class="pln"> assets</span><span class="pun">.</span><span class="pln">catid </span><span class="pun">=</span><span class="pln"> </span><span class="pun">&amp;</span><span class="pln">selcatid</span></code></pre>
+<p>	Request:</p>
+<ul>	<li>		method: GET</li>
+	<li>		path: <code>&lt;server address&gt;/rapid/rpdquery?csql=&lt;sqlname&gt;&amp;&lt;par1&gt;=&lt;val1&gt;&amp;&lt;par2&gt;=&lt;val2&gt; ...</code></li>
+</ul>
+<p>	Restrictions:</p>
+<ul>	<li>		sqlname should exist as request parameter</li>
+	<li>		RAPID will check that all QUERY parameters exist into the request.</li>
+	<li>		two additional paramters are required: <em>limit</em> and <em>offset</em>, both are integers and are used for result pagination.</li>
+</ul>
+<p>	Sample request:</p>
+<pre class="prettyprint prettyprinted" style="">
+<code><span class="pln">http</span><span class="pun">:</span><span class="com">//54.69.200.49:1337/rapid/rpdquery?csql=test&amp;limit=50&amp;offset=0</span></code></pre>
+<p>	The result is in JSON format.</p>
+<p>	Queries</p>
+<p>	Implemented CRUD operations offers data access by default. An API server should nopt accept SQL requests from the client as it is not secure enough.</p>
+<p>	RAPID solves this by storing server side SQL statements that can be later accessed.</p>
+<p>	Use QUERIES page to manage queries list (write/test SQL&#39;s). Results are always sent in JSON format.</p>
+<p>	&nbsp;</p>
+<div class="alert alert-success">
+	The REST command for the service is:<br>
+	<code>https://yourserveraddress:port/rapid/rpdquery?csql=nameofthesql&amp;[par1=val1&amp;par2=val2] ...&amp;limit=0&amp;offset=0 </code><br>
+	<br>
+	limit = number of returned records (0 defaults to 1000/ 10 records for test)<br>
+	offset = number of records set to return (pagination)</div>
+<p>	Sample front-end Angular request object:</p>
+<div class="alert alert-success">
+	var req = {<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; method: &quot;GET&quot;,<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; url: &quot;https://yourserveraddress:port/rapid/rpdquery&quot;,<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headers:{<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Content-Type: &quot;application/json; charset=utf-8&quot;,<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Authorization:&quot;Bearer JHJAHDBAUDIYIU ....&quot;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; params:{<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; csql:&quot;nameoftheSQL&quot;,<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; limit:0,<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; offset:0,<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; par1:&quot;par1&quot;,<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; par2:&quot;par2&quot;,<br>
+	&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...<br>
+	&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+	}</div>
+<p>	&nbsp;</p>
+<p>	<strong>CRUD batch operations</strong></p>
+<p>	RAPID can be used to save (create,update,delete) more records from different tables even from different databases using one request. It can use two methods for its purpose, one that opens a transaction per database and the second one that threat each dataset row as an individual request and returns errors in case as a separate object into the response.</p>
+<p>	Request:</p>
+<ul>	<li>		method: POST</li>
+	<li>		data: req.body</li>
+	<li>		path : <code>&lt;server address&gt;/rapid/up_data</code></li>
+	<li>		path (transactional) : <code>&lt;server address&gt;/rapid/up_tdata</code></li>
+</ul>
+<p>	Request body (JSON):</p>
+<p>	An object &ldquo;data&rdquo; of tables where each table is an array of row objects. Each row should have a property rpdstatus = -1,0,1,2</p>
+<ul>	<li>		-1 = delete</li>
+	<li>		0 = do nothing</li>
+	<li>		1 = create</li>
+	<li>		2 = update</li>
+</ul>
+<p>	Add as many tables and row records as your system can load. It is useful to save documents like invoices, orders and any alike in one shot. This aproach where widely used by traditional client server desktop applications.</p>
+<p>	Sample:</p>
+<pre class="prettyprint prettyprinted" style="">
+<code><span class="pun">{</span><span class="str">&quot;data&quot;</span><span class="pun">:{</span><span class="str">&quot;attach&quot;</span><span class="pun">:[
+            {</span><span class="str">&quot;id&quot;</span><span class="pun">:</span><span class="str">&quot;a123&quot;</span><span class="pun">,</span><span class="str">&quot;file&quot;</span><span class="pun">:</span><span class="str">&quot;max1&quot;</span><span class="pun">,</span><span class="str">&quot;type&quot;</span><span class="pun">:</span><span class="str">&quot;txt&quot;</span><span class="pun">,</span><span class="str">&quot;rpdstatus&quot;</span><span class="pun">:</span><span class="lit">1</span><span class="pun">},
+            {</span><span class="str">&quot;id&quot;</span><span class="pun">:</span><span class="str">&quot;b123&quot;</span><span class="pun">,</span><span class="str">&quot;file&quot;</span><span class="pun">:</span><span class="str">&quot;max2&quot;</span><span class="pun">,</span><span class="str">&quot;type&quot;</span><span class="pun">:</span><span class="str">&quot;txt&quot;</span><span class="pun">,</span><span class="str">&quot;rpdstatus&quot;</span><span class="pun">:</span><span class="lit">2</span><span class="pun">}
+            ]
+        }
+}</span></code></pre>
+<p>	Response:</p>
+<p>	A JSON almost identical with the request, rpdstatus will be set to 0 for solved records and 9 if an error where encountered (up_data path), for each error a descriptive row is added to the response dataset. If the request was sent to be transactional (up_tdata path) in case of any error the error is returned and the traqnsaction is rooled back, these hapens even we are using tables from more than one database within the same dataset.</p>
+</section>
+<section id="sample_testing">
+	<div class="page-header"><h3>Sample testing</h3><hr class="notop"></div>
+<p>	We recommend Firefox and Firefox RestClient for direct testing.</p>
+<p>	Next image present an Create request with Firefox RestClient:</p>
+<p>	CREATE uses POST method and a JSON key values object parameters body of fields and values to insert.<br>
+	You will need a token in order to set properly the authorization header (use Headers and Authorization / token). Headers can be saved for later use, same for requests.</p>
+<p>	Create will return created record as OK result. Useful when you do not send an ID rather retreive one from the server.<br>
+	The server always add an unique UUID if one is not provided.</p>
+<p>	<br>
+	<img alt="" src="assets/images/image_2.png"  ></p>
+<p>	&nbsp;</p>
+</section>
+<section id="rules_before_after">
+	<div class="page-header"><h3>Rules (before & after)</h3><hr class="notop"></div>
+<p>	RULES for CRUD operations</p>
+<p>	Rules editor offers javascript syntax checkings and final validation before overwrite one of the server js files.</p>
+<p>	<strong>Before rules </strong>reffers to functions that can be set to run before an CRUD operation of RESTful API.<br>
+	CRUD operations are based on client REQUEST, depending on the request type there each request comes with parameters or atributes. Before rules are in place to check or alter the request parameters to provide a better option for your application API.</p>
+<p>	Before rules are implemented as module from &quot;rpdbefore.js&quot; file found on &quot;js&quot; folder of your server root. When is edited it is copied to &quot;js/work&quot; folder and saved only after it is checked against gross errors that can stop the start process of your server.</p>
+<p>	Function naming rule is simple, the function name is formed by table name (lowercase) and action name propper case (Create, Find, Update, Delete).</p>
+<p>	Function parameters:</p>
+<ul>	<li>		req&nbsp;&nbsp; - express client request, provides all needed information related to client request</li>
+	<li>		atr&nbsp;&nbsp;&nbsp; - object atributes, request parameters sent in body or query, it is an key/value object.</li>
+	<li>		next - the callback function, it should be used otherwise the service will never respond, if should stop the service it can be used to return an error by giving a parameter like <em>next(my_error)</em></li>
+</ul>
+<p>	Sample:</p>
+<pre>
+module.export = {
+  		...
+	  	usersCreate: function(req,atr,next){
+	  		atr.id = myfunction(); // create custom ID
+	  		if (!atr.email){return next({error:&quot;email required&quot;});
+	  		next()
+	  	},
+  		...
+  	}</pre>
+<p>	The <strong>checkAll</strong> before rule runs on top of all requests if it is set (found in module).</p>
+<p>	<strong>After rules </strong>reffers to functions that can be set to run after a CRUD application of RESTful API. It is useful to check and change the request result. Same model as &quot;BEFORE&quot; rules.</p>
+<p>	&nbsp;</p>
+<p>	&nbsp;</p>
+</section>
+
+	</div>
+</body>
+</html>

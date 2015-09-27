@@ -1,0 +1,131 @@
+.tab-container {
+  background: #8dc8fb;
+  margin: 0;
+  padding: 0;
+  max-height: 40px;
+}
+.tab-container ul.nav-tabs {
+  margin: 0;
+  list-style-type: none;
+  line-height: 40px;
+  max-height: 40px;
+  overflow: hidden;
+  display: inline-block;
+  display: -webkit-flex;
+  display: flex;
+  padding-right: 20px;
+  border-bottom: 5px solid #f7f7f7;
+}
+.tab-container ul.nav-tabs > li {
+  margin: 5px -14px 0;
+  -moz-border-radius-topleft: 28px 145px;
+  -webkit-border-top-left-radius: 28px 145px;
+  border-top-left-radius: 28px 145px;
+  -moz-border-radius-topright: 28px 145px;
+  -webkit-border-top-right-radius: 28px 145px;
+  border-top-right-radius: 28px 145px;
+  padding: 0 30px 0 25px;
+  height: 170px;
+  background: #c3d5e6;
+  position: relative;
+  -moz-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  width: 200px;
+  max-width: 200px;
+  min-width: 20px;
+  border: 1px solid #aaa;
+}
+.tab-container ul.nav-tabs > li:first-child {
+  margin-left: 0;
+}
+.tab-container ul.nav-tabs > li:last-of-type {
+  margin-right: 0;
+}
+.tab-container ul.nav-tabs > li > a {
+  display: block;
+  max-width: 100%;
+  text-decoration: none;
+  color: #222;
+  padding: 3px 7px;
+}
+.tab-container ul.nav-tabs > li > a span {
+  overflow: hidden;
+  white-space: nowrap;
+  display: block;
+}
+.tab-container ul.nav-tabs > li > a:focus, .tab-container ul.nav-tabs > li > a:hover {
+  background-color: transparent;
+  border-color: transparent;
+}
+.tab-container ul.nav-tabs > li > a .glyphicon-remove {
+  color: #777;
+  display: inline-block;
+  padding: 3px;
+  font-size: 10px;
+  position: absolute;
+  z-index: 10;
+  top: 7px;
+  right: -10px;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+.tab-container ul.nav-tabs > li > a .glyphicon-remove:hover {
+  background: #d39ea3;
+  color: white;
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.25);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.25);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+}
+.tab-container ul.nav-tabs > li.active {
+  z-index: 2;
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2Y3ZjdmNyIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 30, color-stop(0%, #ffffff), color-stop(100%, #f7f7f7));
+  background-image: -moz-linear-gradient(#ffffff, #f7f7f7 30px);
+  background-image: -webkit-linear-gradient(#ffffff, #f7f7f7 30px);
+  background-image: linear-gradient(#ffffff, #f7f7f7 30px);
+}
+.tab-container ul.nav-tabs > li.active > a {
+  background-color: transparent;
+  border-color: transparent;
+  border-bottom-color: transparent;
+}
+.tab-container ul.nav-tabs > li.active > a:focus, .tab-container ul.nav-tabs > li.active > a:hover {
+  background-color: transparent;
+  border-color: transparent;
+  border-bottom-color: transparent;
+}
+.tab-container ul.nav-tabs .btn {
+  float: left;
+  height: 20px;
+  width: 35px;
+  min-width: 35px;
+  max-width: 35px;
+  margin: 10px 0 0 0;
+  border-color: #71a0c9;
+  outline: none;
+  -moz-transform: skew(30deg);
+  -ms-transform: skew(30deg);
+  -webkit-transform: skew(30deg);
+  transform: skew(30deg);
+}
+.tab-container ul.nav-tabs .btn.btn-default {
+  background: #c3d5e6;
+}
+.tab-container ul.nav-tabs .btn.btn-default:hover {
+  background: #d2deeb;
+}
+.tab-container ul.nav-tabs .btn.btn-default:active {
+  background: #9cb5cc;
+}
+.tab-container .tab-pane {
+  padding: 2px 10px;
+  text-align: center;
+}
+.tab-container .tab-pane.active {
+  border-top: 1px solid #ddd;
+}
+

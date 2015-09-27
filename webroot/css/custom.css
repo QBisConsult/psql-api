@@ -1,0 +1,49 @@
+.table-normal {
+  border-spacing: 0;
+  border-collapse: collapse;
+  border: 1px solid;
+  border-color: lightblue;
+}
+.table-normal td {
+  	border: 1px solid;
+  	padding: 5px;
+  	border-color: lightblue;
+}
+
+.ace_editor { height: 90%; }
+
+.table-normal th {
+  text-align: left;
+  padding: 5px;
+  background-color: lightblue;
+  color: grey;
+  border: 1px solid;
+  border-color: lightblue;
+  padding: 5px;
+}
+.div-cnt0 {
+	border: 0px solid;
+	border-color: lightblue;
+	height: 517px;
+}
+.div-cnt1 {
+	border: 0px solid;
+	border-color: lightblue;
+	height: 483px;
+}	
+.div-cnt2 {
+      padding-top: 10px;  
+      padding-right: 10px;  
+      padding-bottom: 10px;  
+      padding-left: 20px;
+}
+.div-cnt3 {
+      height: 500px;
+}
+.div-cnt4 {
+        border: 1px solid;
+	border-color: lightblue;
+	height: 100%;
+	float:left;
+	width:100%
+}

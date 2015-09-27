@@ -1,0 +1,10 @@
+.static-navbar {
+  margin-top:-25px;
+}
+.navbar-default,.navbar-inverse {
+  font-size:120%;
+  border:0px;
+}
+.navbar-brand {
+  //text-transform:uppercase;
+}

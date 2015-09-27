@@ -1,0 +1,341 @@
+<div style="margin-left:70px; width:60%;" ng-controller="SettingsCtrl">
+
+	<h2 style="color:SteelBlue">
+	Settings
+	</h2>
+	<div class="col-lg-8" ng-show='isnew'>
+			<div class="panel panel-info">
+				<div class="panel-heading">
+				    <h3 class="panel-title">{{stepcaption}}</h3>
+				    <h6 class="panel-title">{{subcaption}}</h6>
+				</div>
+				<div class="panel-body">
+				  	<table ng-show='step===0'>
+				  	    <tr>
+					    <td><p>Domain</p></td>
+					    <td><input style="width:100%" type="text" id="domain" placeholder="server address" ng-model="con.domain"></input>
+					    </td></tr>
+				  	    <tr>
+					    <td width=50%><p>Port</p></td>
+					    <td><input type="number" id="domain" placeholder="Port" ng-model="con.port"></input>
+					    </td></tr>
+					    <tr>
+					    <td width=50%><p>Database name</p></td>
+					    <td><input type="text" id="dbn" placeholder="Database" ng-model="con.db"></input>
+					    </td></tr>
+				  	    <tr>
+					    <td width=50%><p>User Name</p></td>
+					    <td><input type="text" id="username" placeholder="User" ng-model="con.usern"></input> 
+					    </td></tr>
+					    <tr><td width=50%><p>Password</p></td>
+					    <td><input type="password" id="pwd"  placeholder="Password" ng-model="con.pwd"></input>
+					    </td></tr>
+					    <tr><td>&nbsp</td></tr>
+					    <tr><td>&nbsp</td>
+					    <td><button ng-show="reset==1" type="button" class="btn btn-info" ng-click="cancelreset()">Cancel</button></td>
+					    <td><button type="button" class="btn btn-info" ng-click="rl=true;dbcheck(con)">Next</button></td>
+					    </tr>
+				  	</table>
+				  	<table ng-show='step==1'>
+				  		<tr><td><p>Database credits OK</p></td></tr>
+				  		<tr><td><p>Database: {{con.db}}</p></td></tr>
+				  		<!--<tr><td><p>A new database RCFG is required for system information storage, this will allow scallabilty. Press CREATE to proceed.
+				  		<tr> -->
+				  		<td><button type="button" class="btn btn-info" ng-click="step=0">Previous</button>
+				  		<!--<button type="button" class="btn btn-info" ng-click="step=0;addTab(false,'start','Start',true)">Cancel</button>--> </td>
+					    	<td><button type="button" class="btn btn-info" ng-click="checkrcfg()">Next</button></td>
+					    	</tr>
+				  	</table>
+				  	<table ng-show='step==2'>
+				  		<tr><td><p>RCFG system configuration database is required.</p></td></tr>
+				  		<tr><td><p>Press "CREATE", create the configuration database and store server configuration.
+				  		<tr>
+				  		<td><button type="button" class="btn btn-info" ng-click="step=1">Previous</button></td>
+					    	<td><button type="button" class="btn btn-info" ng-click="savecfg(2)">Create</button></td>
+					    	</tr>
+				  	</table>
+				  	<table ng-show='step==4'>
+				  		<tr><td><p>RCFG system configuration database is set.</p></td></tr>
+				  		<tr><td><p>Press "SAVE" to store server configuration.
+				  		<tr>
+				  		<td><button type="button" class="btn btn-info" ng-click="step=1">Previous</button></td>
+					    	<td><button type="button" class="btn btn-info" ng-click="savecfg(1)">Save</button></td>
+					    	</tr>
+				  	</table>
+				  	<table ng-show='step==6'>
+				  		<tr><td><p>System settings complete.</p></td></tr>
+				  		<tr>
+					    	<td><button type="button" class="btn btn-info" ng-click="done()">Done</button></td>
+					    	</tr>
+				  	</table>
+				  	<table ng-show='step==9'>
+				  		<tr><td><p>Used with recommended json web token authorization method.<br> 
+				  		Please check AUTHORIZATION documentation for related information. <br>
+				  		All active tokens will be invalidated when password is changed.
+				  		</p></td></tr>
+				  		<tr><td><p>Password</p></td></tr>
+				  		<tr><td><input type="text" placeholder="JWT password" ng-model="jwt.pwd" style="width:400px">
+				  		<tr><td><input type="text" placeholder="Retype JWT password" 
+				  		ng-model="jwt.rpwd" style="width:400px">
+				  		</td></tr>
+				  		<tr><td>
+				  		<p>&nbsp</p>
+					    	<button type="button" class="btn btn-info" ng-click="canceltpwd()">Cancel</button>
+					    	&nbsp&nbsp&nbsp<button type="button" class="btn btn-info" ng-click="savetpwd()">Save</button></td>
+					    	</tr>
+					    	<tr><td style="color:red">{{jwt.err}}</td></tr>
+				  	</table>
+				  	<table ng-show='step==10'>
+				  		<tr><td><p>New SSL Certificate (PEM encoded).<br> 
+				  		Please check SSL documentation for related information.
+				  		</p></td></tr>
+				  		
+				  		<tr><td><textarea style="font-size:70%" ng-model="ssl.crt" rows="5" cols="85" 
+				  		placeholder="Paste the certificate (CRT) here."></textarea></td></tr>
+				  		<tr><td><textarea style="font-size:70%" ng-model="ssl.key" rows="5" cols="85" 
+				  		placeholder="Paste the key here."></textarea></td></tr>
+				  		</td></tr>
+				  		<tr><td>
+				  		<p>&nbsp</p>
+					    	<button type="button" class="btn btn-info" ng-click="cancelsslc()">Back</button>
+					    	&nbsp&nbsp&nbsp<button type="button" class="btn btn-info" ng-click="savesslc()">Save</button>
+					    	</td>
+					    	</tr>
+					    	<tr><td style="color:red">{{ssl.err}}</td></tr>
+					    	<tr><td style="color:Green;font-size:120%">{{ssl.msg}}</td></tr>
+				  	</table>
+				  	<table ng-show='step==11'>
+				  		<tr>
+				  		<td style="width:200px;color:navy"><b>Issuer:</b></td>
+				  		</tr>
+				  		<tr>
+				  		<td>Country</td><td>{{ssl.certificate.issuer.country}}</td>
+				  		</tr>
+				  		<tr>
+				  		<td>State</td><td>{{ssl.certificate.issuer.state}}</td>
+				  		</tr>
+				  		<tr>
+				  		<td>City</td><td>{{ssl.certificate.issuer.locality}}</td>
+				  		</tr>
+				  		<tr>
+				  		<td>Organization</td><td>{{ssl.certificate.issuer.organization}}</td>
+				  		</tr>
+				  		<tr>
+				  		<td>Organization Unit</td><td>{{ssl.certificate.issuer.organizationUnit}}</td>
+				  		</tr>
+				  		<tr>
+				  		<td>Common Name</td><td>{{ssl.certificate.issuer.commonName}}</td>
+				  		</tr>
+				  		<tr>
+				  		<td style="color:navy"><b>Owner:</b></td>
+				  		</tr>
+				  		<tr>
+				  		<td>Country</td><td>{{ssl.certificate.country}}</td>
+				  		</tr>
+				  		<tr>
+				  		<td>State</td><td>{{ssl.certificate.state}}</td>
+				  		</tr>
+				  		<tr>
+				  		<td>City</td><td>{{ssl.certificate.locality}}</td>
+				  		</tr>
+				  		<tr>
+				  		<td>Organization</td><td>{{ssl.certificate.organization}}</td>
+				  		</tr>
+				  		<tr>
+				  		<td>Organization Unit</td><td>{{ssl.certificate.organizationUnit}}</td>
+				  		</tr>
+				  		<tr>
+				  		<td>Common Name</td><td>{{ssl.certificate.commonName}}</td>
+				  		</tr>
+				  		<tr>
+				  		<td>Email</td><td>{{ssl.certificate.emailAddress}}</td>
+				  		</tr>
+				  		<tr>
+				  		<td>Start Date</td><td>{{ssl.certificate.validity.start}}</td>
+				  		</tr>
+				  		<tr>
+				  		<td>End Date</td><td>{{ssl.certificate.validity.end}}</td>
+				  		</tr>
+				  		<tr><td>
+					    	<button type="button" class="btn btn-info" ng-click="canceltpwd()">Return</button></td>
+					    	</tr>
+					    	<tr><td style="color:red">{{ssl.err}}</td></tr>
+					    	<tr><td style="color:red;font-size:160%">{{ssl.msg}}</td></tr>
+				  	</table>
+				  	<table ng-show='step==12'>
+				  		<tr><td><p style="color:grey">When set in PRODUCTION mode, the server will use HTTPS protocal by default. Please check SSL help for more related details.
+				  		</p></td></tr>
+				  		<tr><td><input type="number" placeholder="API Port" ng-model="mode.port">
+				  		API port</input>
+				  		<tr><td><input type="checkbox" ng-model="mode.production"> Production (secured communication protocol)
+				  		</td></tr>
+				  		<tr><td><input type="checkbox" ng-show="!mode.production"
+				  		ng-model="mode.ssl"> HTTPS (secured communication protocol, default for production mode is ON)</input>
+				  		</td></tr>
+				  		<tr><td><input type="checkbox" ng-model="mode.start"> API server access enabled</input>
+				  		</td></tr>
+				  		<tr><td>
+				  		<p>&nbsp</p>
+					    	<button type="button" class="btn btn-info" ng-click="canceltpwd()">Cancel</button>
+					    	&nbsp&nbsp&nbsp<button type="button" class="btn btn-info" ng-click="savemode()">Save</button></td>
+					    	</tr>
+					    	<tr><td style="color:red">{{mode.err}}</td></tr>
+				  	</table>
+				  	<table ng-show='step==13'>
+				  		<tr><td><p style="color:grey">
+				  		 Enter a valid JSON array.<br>
+				  		 [] - no filter set.<br>
+				  		 ["ip1","ip2",...] - allow only ip1, ip2 and ... others in list</p>
+				  		<p style="color:firebrick">
+				  		Your reported IP: <b>{{reportedIp}}</b><br>be sure this is in the list before saving configuration 
+				  		if you will need to use the application from this location!</p>
+				  		</td></tr>
+				  		<tr><td>
+				  		<div style="height:120px;width:100%">
+				  		<div ng-model="allowip" ng-change="changeIp()" 
+							ui-ace="{
+							  useWrapMode : true,
+							  showGutter: true,
+							  theme:'iplastic',
+							  mode: 'json',
+							  fontSize:16,
+							  firstLineNumber: 1,
+							  onLoad: aceLoaded4
+							}" ></div> 
+				  		</div>
+				  		</td></tr>
+				  		<tr><td>
+				  		<p>&nbsp</p>
+					    	<button type="button" class="btn btn-info" ng-click="canceltpwd()">Cancel</button>
+					    	&nbsp&nbsp&nbsp<button type="button" class="btn btn-info" ng-click="saveiplist(1)">Save</button></td>
+					    	</tr>
+					    	<tr><td style="color:red">{{ipflterr}}</td></tr>
+				  	</table>
+			  	</div>
+			</div>
+			<p style="color:red">{{errmsg}}</p>
+	</div>
+	<div ng-hide='isnew'>
+		<div ng-show='sysok'>
+		<table>
+			<tr><td valign="top"><table class="table-normal">
+				<tr>
+				<th >
+					PostgreSQL database server
+				</th>
+				<th >
+					&nbsp
+				</th>
+				</tr>
+				<tr>
+					<td>Host</td>	
+					<td>{{configuration.host}}</td>
+				</tr>
+				<tr>	
+					<td>Port</td>
+					<td>{{configuration.port}}</td>
+				</tr>
+				<tr>	
+					<td></td>
+					<td><button type="button" class="btn btn-info" ng-click="changedb()">Change</button></td>
+				</tr>
+				<tr>
+				<th >
+					System
+				</th>
+				<th >
+					&nbsp
+				</th>
+				<tr>	
+					<td>Administrator</td>
+					<td>{{configuration.username}}</td>
+				</tr>
+				<tr>	
+					<td></td>
+					<td><button type="button" class="btn btn-info" ng-click="changepwd()">Change</button>
+					&nbsp<button type="button" class="btn btn-info" ng-click="ipfilter()">IP filter</button>
+					</td>
+				</tr>
+				<tr>	
+					<td>RAPID API</td>
+					<td>
+					<span ng-show="rapicfg.start">ON</span><span style="color:red" ng-show="!rapicfg.start">OFF</span>,
+					{{rapicfg.mode}}, {{rapicfg.protocol}}, {{rapicfg.port}}</td>
+				</tr>
+				<tr>	
+					<td></td>
+					<td><button type="button" class="btn btn-info" ng-click="changemode()">Change</button>
+					&nbsp<button type="button" class="btn btn-info" ng-click="reset()">Restart</button>
+					&nbsp&nbsp<span style="color:green">{{rmsg}}</span>
+					</td>
+				</tr>
+				<tr>	
+					<td>Token password</td>
+					<td><button type="button" class="btn btn-info" ng-click="changetpwd()">Change</button></td>
+				</tr>
+				<tr>	
+					<td>SSL certificate</td>
+					<td>
+					<button type="button" class="btn btn-info" ng-click="changessl()">Change</button>
+					&nbsp<button type="button" class="btn btn-info" ng-click="viewssl()">View</button>
+					</td>
+				</tr>
+			</table></td><td>&nbsp</td>
+			
+			<!--<td valign="top"><table class="table-normal">
+				<tr>
+				<th >
+					Resources
+				</th>
+				<th >
+					&nbsp
+				</th>
+				<tr>
+					<td>Databases</td>	
+					<td ng-repeat = "dbn in configuration.databases.names">
+					{{dbn}},</td>
+				</tr>
+				<tr>	
+					<td></td>
+					<td><button type="button" class="btn btn-info" ng-click="done()">Set</button></td>
+				</tr>
+				<tr>
+					<td>Queries</td>	
+					<td ng-repeat = "dbn in configuration.databases.names">
+					{{dbn}},</td>
+				</tr>
+				<tr>	
+					<td></td>
+					<td><button type="button" class="btn btn-info" ng-click="test()">Set</button></td>
+				</tr>
+			</table></td> -->
+			
+			</tr>
+		</table>		
+		</div>
+		<div ng-hide='sysok'>
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<h3 class="panel-title">{{stepcaption}}</h3>
+			</div>
+			<div class="panel-body">
+				<table ng-show='step==0'>
+				<tr><td><p>Possible invalid settings, your database can not be reached.
+				<br>Make sure your PostgreSQL server it is up and running and press reload configuration next.</p></td></tr>
+				<tr><td><button type="button" class="btn btn-info" ng-click="reload()">Reload configuration</button></td></tr>
+				</table>
+				<table ng-show='step==1'>
+				<tr><td><p>Message:</p></td><td><p>Can not load configuration!</p></td></tr>
+				<tr><td><p>Error:</p></td><td><p style="color:red">{{errmsg}}</p></td></tr>
+				<tr><td><p>Current configuration:</p></td></tr>
+				<tr><td>&nbsp</td><td><p>Domain (host)</p></td><td><p>{{con.domain}}</p></td></tr>
+				<tr><td>&nbsp</td><td><p>Port</p></td><td><p>{{con.port}}</p></td></tr>
+				<tr><td>&nbsp</td><td><p>Username:</p></td><td><p>{{con.usern}}</p></td></tr>
+				<tr><td><button type="button" class="btn btn-info" ng-click="reload()">Reload configuration</button></td>
+				<td>&nbsp</td><td><button type="button" class="btn btn-info" ng-click="reconfig()">Reset</button></td></tr>
+				</table>
+			</div>	
+		</div>
+		</div>
+	</div>
+</div>

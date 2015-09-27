@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<div style="margin-left:70px; width:80%;" ng-show='firstload==1'>
+	<!--<p>&nbsp</p><p>&nbsp</p> -->
+	<div align="Left" ng-show='rl'>
+		<p>&nbsp</p><p>&nbsp</p>
+		<div class="col-lg-4"></div>
+		<div class="col-lg-4">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+				    <h3 class="panel-title">Login</h3>
+				</div>
+				<div class="panel-body">
+				  	<table><tr>
+					    <td width=50%><p>User Name</p></td>
+					    <td><input type="text" id="username" placeholder="User" ng-model="username">
+					    </td></tr>
+					    <tr><td width=50%><p>Password</p></td>
+					    <td><input type="password" id="pwd" placeholder="Password" ng-model="pwd">
+					    </td></tr>
+					    <tr><td>&nbsp</td></tr>
+					    <tr><td>&nbsp</td>
+					    <td><button type="button" class="btn btn-info" ng-click="tlogin(username,pwd)">Login</button></td>
+					    </tr>
+				  	</table>
+			  	</div>
+			</div>
+			<p style="color:red">{{errmsg}}</p>
+			<p style="color:grey">RDS PostgreSQL WEB services</p>
+		</div>
+		<div class="col-lg-4"></div>
+	</div>
+	<div align="Left" ng-hide='rl'>
+		<h2 style="color:SteelBlue">
+				Welcome <b>{{username}}</b>
+		</h2>
+		<p>Here are your REST API server configuration:
+		<div ng-show='sysok'>
+			
+			<table class="table-normal">
+				<tr>
+				<th >
+					RAPID data server
+				</th>
+				<td >
+					<span ng-show="rapicfg.start">ON</span><span ng-show="!rapicfg.start" style="color:red">OFF</span>
+				</td>
+				<tr>
+					<td>Mode</td>	
+					<td>{{rapicfg.mode}}</td>
+				</tr>
+				<tr>
+					<td>Port</td>	
+					<td>{{rapicfg.port}}</td>
+				</tr>
+				<tr>
+					<td>Protocol</td>	
+					<td>{{rapicfg.protocol}}</td>
+				</tr>
+				<tr>
+				<th >
+					PostgreSQL database server
+				</th>
+				<th >
+					&nbsp
+				</th>
+				</tr>
+				<tr>
+					<td>Host*</td>	
+					<td>{{configuration.host}}</td>
+				</tr>
+				<tr>	
+					<td>Port</td>
+					<td>{{configuration.port}}</td>
+				</tr>
+				<tr>
+					<td>Databases*</td>
+					<td>{{configuration.databases.number}}</td>
+				</tr>
+				<tr>
+					<td>Databases</td>
+					<td><span ng-repeat = "dbn in configuration.databases.names">
+					{{dbn}},</span></td>
+				</tr>
+				<tr>
+					<td>Tables*</td>
+					<td>{{configuration.tables.number}}</td>
+				</tr>
+				<tr>
+					<td>Queries</td>
+					<td><span ng-repeat = "q in configuration.queries">{{q.queryname}}
+					<span style="color:red" ng-hide="q.inuse">*</span>,</span</td>
+				</tr>
+			</table>
+			<p></p><button type="button" class="btn btn-info" ng-click="logoff()">Logoff</button>
+			<h6 style="color:grey">
+			* HOST address related to REST API server - localhost means REST API server localhost<br>
+			* Databases added to REST API configuration<br>
+			* TABLES - all tables regardles the database<br>
+			<span style="color:red">*</span>&nbsp not tested queries.</h6>
+		</div>
+		<div ng-hide='sysok'>
+			<p>
+				{{gosetmessage}}
+			</p>
+			<p>&nbsp</p>
+			<p>Press 'settings' for server configuration page:</p>
+			<a ng-click="settings()"> Settings </a>
+		</div>	
+	
+	</div>
+	
+</div>
+<div style="margin-left:70px; width:80%;" ng-show='firstload==0'>
+	<p>&nbsp</p><p>&nbsp</p>
+	<h1>{{newinstall}}</h1>
+	<div ng-show='ls==1'>
+		<p>Please folow start page instructions next to properly configure your PostgreSQL RESTful API server.</p>
+		<p>First you will need to set up an access credit pair (username and password) for your administrative access.</p>
+		<p>&nbsp</p>
+		<button type="button" class="btn btn-info" ng-click="next()">Create Login information</button>
+	</div>
+	<div ng-show='ls==2'>
+		<input id="tname" type="text" placeholder="User Name" ng-model="tu" required="required" /><br>
+		<input id="tpwd" type="password" placeholder="Password" ng-model="tp" required="required" /><br>
+		<input id="rtpwd" type="password" placeholder="Retype password" ng-model="rtp" required="required"/>
+		<p style="color:red">{{cms}}</p>
+		<p>&nbsp</p>
+		<button type="button" class="btn btn-info" ng-click="next()">Cancel</button>
+		<button type="button" class="btn btn-info" ng-click="setfirstpass(tu,tp,rtp)">Setup Login information</button>
+	</div>
+	<div ng-show='ls==3'>
+		<p>Login information setup OK</p>
+		<p>&nbsp</p>
+		<button type="button" class="btn btn-info" ng-click="next()">Next</button>
+	</div>
+	<p style="color:red">{{errmsg}}</p>
+</div

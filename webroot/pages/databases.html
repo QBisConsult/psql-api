@@ -1,0 +1,82 @@
+<div>
+	<h4 style="color:SteelBlue">
+	Databases {{mdb.databases.number}}
+	</h4>
+	<div class="row">
+		<div class="col-lg-2">
+			<div class="panel panel-default" ng-show="add_db">
+				<div class="panel-heading">
+				    <h3 class="panel-title">Add database</h3>
+				</div>
+				<div class="panel-body">
+					<select name="repeatSelect" ng-model="add_dbname">
+					      <option ng-repeat="option in srvdbs" value="{{option}}">{{option}}</option>
+					</select>
+					<p>&nbsp</p>
+				    	<button type="button" class="btn btn-info" ng-click="cancel()">Cancel</button>&nbsp
+				    	<button type="button" class="btn btn-info" ng-click="adddatabase(add_dbname)">Add</button>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+				    <h3 class="panel-title">Select database</h3>
+				</div>
+				<div class="panel-body">
+					<div ng-repeat = "dbs in mdb.databases.names">
+						<label><input ng-click="sk(dbs)" type="radio" name="dbssel">
+						{{dbs}} </input>
+						</label>
+					</div>
+				    	<button type="button" class="btn btn-info" ng-click="get_dbs()">Add database</button>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-2" >
+			<div class="panel panel-default" ng-show="showtable>0">
+				<div class="panel-heading">
+				    <h3 class="panel-title">{{seldb}} / {{tablesnumber}} tables</h3>
+				</div>
+				<div class="panel-body" style="height:400px;overflow-y:scroll">
+					<div ng-repeat = "table in dbsel">
+						<label><input ng-click="tk(table)" type="radio" name="tblsel">
+						{{table.tablename}} </input>
+						</label>
+					</div>
+				</div>	
+			</div>
+		</div>
+		<div class="col-lg-4" >
+			<div class="panel panel-default" ng-show="showtable>1">
+				<div class="panel-heading">
+				    <h3 class="panel-title">{{tablesel.tablename}} / {{tablesel.fields.length}} fields</h3>
+				</div>
+				<div class="panel-body" style="height:400px;overflow-y:scroll">
+					<div ng-repeat = "field in tablesel.fields">
+						<label><input ng-click="fk(field)" type="radio" name="fldsel">
+						{{field.fname}} [{{field.detail.data_type}}]</input><a ng-show="field.fname==field.detail.pkey"> (pky)</a>
+						</label>
+					</div>
+				</div>	
+			</div>
+		</div>
+		<div class="col-lg-3" >
+			<div class="panel panel-default" ng-show="showtable>2">
+				<div class="panel-heading">
+				    <h3 class="panel-title">{{fieldsel.fname}} / {{tablesel.tablename}}</h3>
+				</div>
+				<div class="panel-body" style="height:400px;overflow-y:scroll">
+					<table class="table-normal">
+					<tr><td>Table</td><td>{{fieldsel.detail.table_name}}</td></tr>
+					<tr><td>Field</td><td>{{fieldsel.detail.column_name}}</td></tr>
+					<tr><td>Type</td><td>{{fieldsel.detail.data_type}}</td></tr>
+					<tr><td>Is nullable</td><td>{{fieldsel.detail.is_nullable}}</td></tr>
+					<tr><td>Is updatable</td><td>{{fieldsel.detail.is_updatable}}</td></tr>
+					<tr><td>Primary key</td><td>{{fieldsel.detail.pkey}}</td></tr>
+					<tr><td>Character max lenght</td><td>{{fieldsel.detail.character_maximum_lenght}}</td></tr>
+					<tr><td>Numeric precision</td><td>{{fieldsel.detail.numeric_precision}}</td></tr>
+					</table>
+				</div>	
+			</div>
+		</div>
+	</div>
+</div>

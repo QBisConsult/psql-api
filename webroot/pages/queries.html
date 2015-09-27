@@ -1,0 +1,126 @@
+<div>
+  <!--<h4 style="color:SteelBlue">
+	Queries
+  </h4> -->
+  <table style="width:100%"><tr>
+	<td> 
+	<h4 style="color:SteelBlue">
+	    &nbsp&nbsp&nbspQueries
+  	</h4>
+	<div class="col-lg-2" style="width:200px">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			    <h3 class="panel-title">Select query</h3>
+			</div>
+			<div class="panel-body" style="height:450px;overflow-y:scroll">
+				<div ng-repeat = "q in mdb.queries">
+					<label><input ng-click="qsel(q)" type="radio" name="querysel" ng-model="selectedsql">
+					{{q.queryname}} <span style="color:red" ng-hide="q.inuse">*<span></input>
+					</label>
+				</div>
+			</div>	
+		</div>
+	</div>
+  	<div ></td>
+	<td style="width:100%">
+		<div class="div-cnt0" ng-hide="helpmode">
+			<p style="color:lightblue">&nbsp|&nbsp
+			<!--<a ng-click="">SQL</a>&nbsp|&nbsp -->
+			<a ng-click="showrun()">RUN</a>&nbsp|&nbsp
+			<a ng-click="sqladdnew()">ADD NEW</a>&nbsp|&nbsp
+			<a ng-click="showhelp(true)">HELP</a>&nbsp|&nbsp
+			<span style="color:coral" ng-hide="csql.inuse">* not validated SQL, press RUN and then VALIDATE when tested OK<span>
+			</p>
+			<div class="div-cnt1">
+				<p>&nbspData:
+				<select name="repeatSelect" ng-model="csql.db" ng-change="qncheck(csql.queryname)" placeholder="Database">
+					<option ng-repeat="option in dbslist" value="{{option}}">{{option}}</option>
+				</select>
+				&nbsp&nbspName&nbsp<input type="text" ng-model="csql.queryname" ng-change="qncheck(csql.queryname)" placeholder = "Query name">
+				&nbsp<span ng-show="smod" style="color:lightblue">|</span>&nbsp
+				<a ng-click="sqlsave()" ng-show="smod">SAVE</a>&nbsp<span ng-show="smod" style="color:lightblue">|</span>&nbsp
+				<a ng-click="sc_cancel()" ng-show="smod">CANCEL</a>&nbsp<span ng-show="smod" style="color:lightblue">|</span>&nbsp
+				&nbsp&nbsp&nbsp&nbsp <span style="color:red">{{inerr}}</span>
+				&nbsp&nbsp<span style="color:navy">{{spars}}</span>
+				<p></p>
+				<div ng-style="edth">
+					<div ng-model="csql.sqlstat" ng-change="sqlcheck(csql.sqlstat)" 
+						ui-ace="{
+						  useWrapMode : true,
+						  showGutter: true,
+						  theme:'sqlserver',
+						  mode: 'sql',
+						  fontSize:14,
+						  firstLineNumber: 1,
+						  onLoad: aceLoaded,
+						  onChange: aceChanged
+						}" ></div> 
+				</div>
+				<div class="div-cnt1" style="height:50%" ng-show="shrun">
+					<div style="width:200px;height:100%;float:left">
+						<div class="panel panel-default" style="width:200px;height:90%">
+							<div class="panel-body" style="overflow-y:scroll;height:100%">
+							<table><td>Parameters:</td>
+							<tr ng-repeat="item in params"><td> 
+							<input style="width:160px" placeholder={{item.par}} ng-model="item.value">
+							</td></tr></table>
+							</div>
+							&nbsp&nbsp<a ng-click="validatesql()" ng-show="queryisok">VALIDATE</a>
+							&nbsp&nbsp<a ng-click="testrun()">TEST</a>
+							&nbsp&nbsp&nbsp<a ng-click="cancelrun()">CANCEL</a>
+						</div>
+						
+					</div>
+					<div style="width:60%;height:100%;float:left">
+						<div ng-model="runstat"  
+							ui-ace="{
+							  useWrapMode : true,
+							  showGutter: true,
+							  theme:'iplastic',
+							  mode: 'json',
+							  fontSize:14,
+							  firstLineNumber: 1,
+							  onLoad: aceLoaded,
+							  onChange: aceChanged
+							}" >
+						</div> 
+						&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span style="color:navy">{{runtestmsg}}</span>
+					</div>
+				</div>
+			</div>
+	  	</div>
+	  	<div class="div-cnt0" ng-show="helpmode">
+	  		<br>
+	  		&nbsp&nbsp&nbsp<span style="color:lightblue">|</span>&nbsp
+	  		<a ng-click="showhelp(false)">Back</a>&nbsp<span style="color:lightblue">|</span>&nbsp
+	  		<hr>
+	  		<div class="div-cnt2" style="color:grey">
+	  			<p style="color:SteelBlue">
+		  		Query name	: {{csql.queryname}} <br>
+		  		Parameters	: {{params}}<span ng-show="params.length>0">*<span> <br>
+		  		Method		: GET<br>
+		  		Sample request	: {{runstat}}
+		  		<span ng-show="params.length>0"><br>* parameters should have not null values at test or run time</span>
+		  		</p>
+	  			<h4> Queries HELP</h3>
+	  			<p>
+		  		Custom SQL can be set and used with REST API server, the server accept only server side stored SQL's for security reasons.<br>Here you can set the SQL statement to be used. It sould be PostgreSQL compatible SQL syntax.
+		  		<i style="color:red">Only SELECT statements are allowed!</i></p>
+		  		<p>Parameters can be used with your SQL SELECT statement, see next sample of a SQL and REST API request:<p>
+		  		<code>
+		  		SELECT * from stocks where productid = &pid
+		  		</code>
+		  		<p> Always prefix you parameter name with " &" (spaceand) like in previous sample.
+		  		<p> The REST command for the service is:<br>
+		  		<code>
+		  		https://yourserveraddress/rapid/rpdquery?csql=nameofthesql&[par1=val1&par2=val2] ...&limit=0&offset=0
+		  		</code><br><br>
+		  		limit  = number of returned records (0 defaults to 1000/ 10 records for test)<br>
+		  		offset = number of records set to return (pagination)
+		  		</p>
+		  		<p>Check also CRUD help chapter.</p>
+	  		</div>
+	  	</div>
+	  </td>	
+  </tr></table>
+</div>

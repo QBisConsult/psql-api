@@ -1,0 +1,25 @@
+<div style="margin-left:10px; width:95%;" ng-controller="NTabCtrl">
+	<div ng-show="ceva==1">
+		<h3 style="color:SteelBlue">
+			NEW TAB
+		</h3>
+		<button type="button" class="btn btn-info" ng-click="ceva=2;tname('Data','nav')">Databases</button>&nbsp
+		<button type="button" class="btn btn-info" ng-click="ceva=3;tname('Queries','nav')">Queries</button>&nbsp
+		<button type="button" class="btn btn-info" ng-click="ceva=4;tname('Rules','nav')">Rules</button>&nbsp
+		<button type="button" class="btn btn-info" ng-click="ceva=5;tname('Tokens','tokens')">Tokens</button>&nbsp
+	</div>
+	<div ng-show="ceva==2">
+		<ng-include src='"/pages/databases.html"'></ng-include>
+	</div>
+	<div ng-show="ceva==3">
+		<ng-include src='"/pages/queries.html"'></ng-include>
+	</div>
+	<div ng-show="ceva==4">
+		<ng-include src='"/pages/rules.html"'></ng-include>
+	</div>
+	<div ng-show="ceva==5">
+		<ng-include src='"/pages/tokens.html"'></ng-include>
+	</div>
+</div>
+
+

@@ -1,0 +1,27 @@
+<html>
+<head>
+  <title>Text select within TextArea component</title>
+<script type="text/javascript">
+  function HighlightTextareaText(nameTextArea, strSearch) {
+    eTextarea = document.getElementById(nameTextArea);
+    strLength = strSearch.length;
+    if (strLength <= 0)
+      return;
+    contents = eTextarea.value;
+    startPos = contents.indexOf(strSearch);
+    if (startPos < 0)
+      return;
+    eTextarea.selectionStart = startPos;
+    eTextarea.selectionEnd = startPos + strLength;
+    eTextarea.focus();
+  }
+</script>
+</head>
+<body>
+  <form id="myform">
+    <textarea name "mytextarea" id="mytextarea" rows="10" cols="60">Blah blah blah me hey hey
+    hey</textarea>
+    <input type="button" onclick="HighlightTextareaText('mytextarea','me')" value="Find me!"/>
+  </form>
+</body>
+</html>

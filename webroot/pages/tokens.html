@@ -1,0 +1,50 @@
+<div style="margin-left:10px; width:95%;" ng-controller="TokensCtrl">
+  <h4 style="color:SteelBlue">
+	Tokens 
+  </h4>
+  <div class="div-cnt4" style="width:400px">
+	<table ng-table="tableParams" class="table" show-filter="true">
+                <tr ng-repeat="item in $data">
+                    <td title="'Name'" filter="{tname: 'text'}" sortable="'tname'">
+                        {{item.tname}}
+                    </td>
+                    <td title="'Updated'">
+                        {{item.updatedAt}}
+                    </td>
+                    <td title="'Updated'">
+                        <button type="button" class="btn btn-info" ng-click="edit(item)">Edit</button>
+                    </td>
+                </tr>
+        </table>
+  </div>
+  <div class="div-cnt4" style="width:60%;height:375px;border:0px;padding-left: 10px;">
+  	<p>Name: <input type="text" placeholder="User" ng-model="tkname"></input>
+  	<button type="button" class="btn btn-info" ng-click="save()">Save</button>
+  	<button type="button" class="btn btn-info" ng-click="newtk()">New</button>
+  	</p>
+  	<div style="width:100%;height:230px">
+  		<div ng-model="token" 
+			ui-ace="{
+			  useWrapMode : true,
+			  showGutter: true,
+			  theme:'iplastic',
+			  mode: 'json',
+			  fontSize:14,
+			  firstLineNumber: 1,
+			  onLoad: aceLoaded3
+			}" ></div> 
+  	</div>
+  	<div style="width:100%;height:150px">
+  		<div ng-model="jwt" 
+			ui-ace="{
+			  useWrapMode : true,
+			  showGutter: true,
+			  theme:'twilight',
+			  mode: 'text',
+			  fontSize:14,
+			  firstLineNumber: 1,
+			  onLoad: aceLoaded3
+			}" ></div> 
+  	</div>
+  </div>
+</div>
