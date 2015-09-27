@@ -21,7 +21,9 @@ Run the server with:
 node start.js
 
 This server will open two ports, one for administration on HTTPS (443) and another for API requests.
+
 The server can be managed at:  https://server_Ip_or_domain name
+
 It will generate a self-signed SSL certificate at start until you will provide an authorized one.
 
 If OpenSSL can not be found, you will need to provide a SSL certificate otherwise the server will not start.
