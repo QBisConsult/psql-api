@@ -1,0 +1,18 @@
+{
+  "userapid": true,
+  "host": "localhost",
+  "port": 5433,
+  "user": "postgres",
+  "password": "1234",
+  "rapiddb": "rcfg",
+  "rapidid": "default",
+  "suser": "admin",
+  "spwd": "123",
+  "isnew": false,
+  "env": {
+    "development": true,
+    "port": 3330,
+    "start": true
+  },
+  "etk": "5e4f79c8595a604ba9b16b79acf2f46818f9c1"
+}
