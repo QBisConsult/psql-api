@@ -1,5 +1,5 @@
 # psql-api
-RADIP RESTful API for PostgreSQL
+RAPID RESTful API for PostgreSQL
 
 INSTALLATION
 
