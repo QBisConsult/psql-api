@@ -5,7 +5,7 @@ var child = "";
 function error(data){
 	console.log(data);
 	var d = new Date();
-	var daylog = "logeer/log"+d.getUTCFullYear()+"_"+(d.getUTCMonth()+1)+"_"+d.getUTCDate()+".txt";
+	var daylog = "logerr/log"+d.getUTCFullYear()+"_"+(d.getUTCMonth()+1)+"_"+d.getUTCDate()+".txt";
 	fs.appendFileSync(daylog, "\r\n ERROR:" + d + "\r\n"+ data);
 	if (data.substring(0, 14)=='_tls_common.js'){
 		console.log("SSL error");
