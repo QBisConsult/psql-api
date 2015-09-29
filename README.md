@@ -62,4 +62,4 @@ This RESTful API server can be used to offer WEB services for various kind of ap
 
 
 
-License open source MIT
+License MIT
