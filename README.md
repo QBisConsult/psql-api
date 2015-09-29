@@ -17,11 +17,11 @@ git clone https://github.com/QBisConsult/psql-api.git
 
 Run this inside the new server folder:   
 
-sudo npm install
+               sudo npm install
 
 Run the server with:
 
-node start.js
+               node start.js
 
 This server will open two ports, one for administration on HTTPS (443) and another for API requests.
 
