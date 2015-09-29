@@ -6,7 +6,7 @@ INSTALLATION
 Requirements:
 - Linux
 - OpenSSL should be installed before in order to allow the server to create it's first self-signed SSL certificate.
-- Linux - set your computer to accept opening lower ports for NodeJs without root access (80/443), next code works for Ubuntu 14.
+- Linux - set your computer to accept opening lower ports without root access for NodeJs (80/443), next code works for Ubuntu 14.
 
                sudo apt-get install libcap2-bin
                sudo setcap cap_net_bind_service=+ep /usr/local/bin/node
@@ -17,11 +17,11 @@ git clone https://github.com/QBisConsult/psql-api.git
 
 Run this inside the new server folder:   
 
-sudo npm install
+               sudo npm install
 
 Run the server with:
 
-node start.js
+               node start.js
 
 This server will open two ports, one for administration on HTTPS (443) and another for API requests.
 
