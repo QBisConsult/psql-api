@@ -5,6 +5,7 @@ INSTALLATION
 
 Requirements:
 - Linux
+- NodeJS
 - OpenSSL should be installed before in order to allow the server to create it's first self-signed SSL certificate.
 - Linux - set your computer to accept opening lower ports without root access for NodeJs (80/443), next code works for Ubuntu 14.
 
