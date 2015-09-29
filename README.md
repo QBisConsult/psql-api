@@ -27,7 +27,7 @@ This server will open two ports, one for administration on HTTPS (443) and anoth
 
 The server can be managed at:  https://server_Ip_or_domain name
 
-It will generate a self-signed SSL certificate at start until you will provide an authorized one.
+It will use a self-signed SSL certificate generated at first start until you will provide an authorized one or change with your own.
 
 If OpenSSL can not be found, you will need to provide a SSL certificate otherwise the server will not start.
 Put the certificate into "ssl" folder as service.crt and service.key files. The SSL certificate is a PEM encoded crt file.
