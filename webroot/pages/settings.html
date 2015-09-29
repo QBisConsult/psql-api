@@ -1,5 +1,4 @@
 <div style="margin-left:70px; width:60%;" ng-controller="SettingsCtrl">
-
 	<h2 style="color:SteelBlue">
 	Settings
 	</h2>
@@ -13,7 +12,7 @@
 				  	<table ng-show='step===0'>
 				  	    <tr>
 					    <td><p>Domain</p></td>
-					    <td><input style="width:100%" type="text" id="domain" placeholder="server address" ng-model="con.domain"></input>
+					    <td><input style="width:330px" type="text" id="domain" placeholder="server address" ng-model="con.domain"></input>
 					    </td></tr>
 				  	    <tr>
 					    <td width=50%><p>Port</p></td>
@@ -33,7 +32,8 @@
 					    <tr><td>&nbsp</td></tr>
 					    <tr><td>&nbsp</td>
 					    <td><button ng-show="reset==1" type="button" class="btn btn-info" ng-click="cancelreset()">Cancel</button></td>
-					    <td><button type="button" class="btn btn-info" ng-click="rl=true;dbcheck(con)">Next</button></td>
+					    <td><img src="pict/loading43.gif" ng-show="working">
+					    <button type="button" ng-hide="working" class="btn btn-info" ng-click="rl=true;dbcheck(con)">Next</button></td>
 					    </tr>
 				  	</table>
 				  	<table ng-show='step==1'>

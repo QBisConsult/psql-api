@@ -27,7 +27,7 @@ app
 		   f = JSON.parse(c);
 		} catch (e) {}
 		
-		console.log(f);
+		//console.log(f);
 	};
 	
 	$scope.aceLoaded4 = function(_editor) {
@@ -127,15 +127,18 @@ app
 		};
 		gms($http,req,localStorage.ast,getdata);
 	};
-    	
+    	$scope.working = false;
     	$scope.dbcheck = function(con){
+    		$scope.working = true;
     		$scope.errmsg = "";
 	    	var req = {
 			      method: 'POST',
 			      url: $rootScope.baseurl+'setup',
-			      data:con}
+			      data:con,
+			      timeout:3000}
     		function getdata(err,response){
-			if(err){$scope.errmsg = "Server error, please try again.";console.log({error:err})};
+    			$scope.working = false;
+			if(err){$scope.errmsg = "Please check the database server domain name and port!.";console.log({error:err})};
 			if(response){
 			  	//console.log(response);
 				$scope.prevsc = $scope.stepcaption;
@@ -247,7 +250,7 @@ app
     		function getdata(err,response){
 			if(err){$scope.errmsg = "Server error, please try again.";console.log({error:err})};
 			if(response){
-			  	console.log(response);
+			  	//console.log(response);
 			  	$scope.ssl.msg = "Certificate saved OK. Testing connection ..."
 			  	$timeout($scope.checknewsslcon(), 5500);
 				//$scope.canceltpwd()		
@@ -258,7 +261,7 @@ app
     	};
     	$scope.changemode = function(){
     		$scope.rmsg = "";
-    		console.log($rootScope.rapicfg);
+    		//console.log($rootScope.rapicfg);
     		$scope.mode.port 	= $rootScope.rapicfg.port;
     		$scope.mode.production  = !$rootScope.rapicfg.development;
     		$scope.mode.ssl		= $rootScope.rapicfg.devssl;
@@ -462,7 +465,7 @@ app
 		$rootScope.mdb.tables.names.forEach(function(table){
 			var idb = $rootScope.mdb.tables.db[table]
 			if (!$rootScope.mdb.dbtables[idb]){$rootScope.mdb.dbtables[idb]=[]};
-			console.log('adt0',table);
+			//console.log('adt0',table);
 			var tbl = {tablename:table};
 			var fields = [];
 			var flds = Object.keys($rootScope.mdb.tables.structures[table]);
@@ -473,12 +476,12 @@ app
 				fields.push(fld);
 				
 			});
-			console.log('adt1');
+			//console.log('adt1');
 			tbl.fields = fields;
 			$rootScope.mdb.dbtables[idb].push(tbl);
 			var queries = [];
 			var sqls = Object.keys($rootScope.mdb.sqls);
-			console.log('adt2');
+			//console.log('adt2');
 			sqls.forEach(function(q){
 				var qry = $rootScope.mdb.sqls[q];
 				queries.push({id:qry.id,queryname:q,inuse:qry.inuse,dbs:qry.database})});
@@ -488,7 +491,7 @@ app
 				queries.push({id:qry.id,queryname:q,inuse:qry.inuse,dbs:qry.database})});
 			$rootScope.mdb.queries = queries;
 		});
-		console.log($rootScope.mdb);
+		//console.log($rootScope.mdb);
     };    
     $scope.loadmdb = function(){
     	    var req = {
@@ -497,7 +500,7 @@ app
 	    function getdata(err,response){
 			if(err){$scope.errmsg = "Server error, please try again.";console.log({error:err})}
 			if(response){
-		  		console.log("LI:",response);
+		  		//console.log("LI:",response);
 				if (response.data.mdb){
 					$rootScope.mdb   = response.data.mdb;
 					adaptmdb();
@@ -606,7 +609,7 @@ app
     });
     
     $scope.next = function(){
-    	console.log($scope.ls);
+    	//console.log($scope.ls);
     	$scope.ls=$scope.ls+1;
     	if($scope.ls>3){$scope.firstload=1}
     };
@@ -892,7 +895,7 @@ app
   	function final(err,response){
   			console.log(err);
   			if (err){return console.log(err)}
-  			console.log(response);
+  			//console.log(response);
   			switch (jsfile) {
 			    case 'rpdbefore':
 				$scope.showmenu = {bef:true,aft:false,aut:false,mod:false,chk:true,pub:false,bac:true};
@@ -915,7 +918,7 @@ app
   
   $scope.aceLoaded2 = function(_editor) {
 	    // Options
-	    console.log('ACE loaded...');
+	    //console.log('ACE loaded...');
 	    //_editor.renderer.setShowGutter(true);
 	    //_editor.setShowInvisibles(true);
 	    _editor.setReadOnly(false);
