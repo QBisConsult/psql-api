@@ -1,8 +1,8 @@
 {
-  "name": "kdata",
+  "name": "psql-api",
   "version": "1.0.0",
-  "description": "Data Access Server",
-  "main": "kdata.js",
+  "description": "Postgres database access API",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
