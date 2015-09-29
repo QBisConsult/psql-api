@@ -12,8 +12,11 @@ var crc	  = require('buffer-crc32');
 var jwt   = require('jsonwebtoken');
 
 module.exports = {
+	echo: function(req,res){
+		res.send({message:"OK"});
+	},
 	saveiplist: function(req,res){
-		console.log(req.body.aip)
+		//console.log(req.body.aip)
 		var file = req.body.aip;
 		process.rapidcfg.ipallow = JSON.parse(req.body.aip);
 		fs.writeFileSync('ipallow.json',file);
@@ -122,7 +125,7 @@ module.exports = {
 		process.exit(9);
 	},
 	savessl: function(req,res){
-		console.log(req.body);
+		//console.log(req.body);
 		if (!req.body.c){return res.status(404).send({message:"error",error:"incomplete request"})}
 		if (!req.body.k){return res.status(404).send({message:"error",error:"incomplete request"})}
 		pem.readcertificate(req.body.c, read)
@@ -139,7 +142,7 @@ module.exports = {
 			fs.writeFileSync('ssl/service.crt', req.body.c);
 			fs.writeFileSync('ssl/service.key', req.body.k);
 			res.send({message:"OK"})
-			console.log('exit');
+			//console.log('exit');
 			process.exit(9);
 		};
 	},
@@ -209,7 +212,7 @@ module.exports = {
 		process.exit(9);		
 	},
 	validatesql: function(req,res){
-		console.log(req.body);
+		//console.log(req.body);
 		function final(err,result){
 			if (err){return res.status(404).send(err)};
 			var mts = process.rapidcfg.mdb.esqls[req.body.queryname];
@@ -445,7 +448,7 @@ module.exports = {
 				dbid:process.rapidcfg.mdb.databases[req.body.db].id}
 			sqlstat ='insert into sqls (id,sqlname,sqlstat,inuse,"createdAt", "updatedAt",deleted,dbid)';
 			sqlstat = sqlstat + " values ("+utils.k2l(f)+")";
-			console.log(sqlstat);
+			//console.log(sqlstat);
 			client.query(sqlstat,function(err, result){
 				client.end();
 				if (err) {

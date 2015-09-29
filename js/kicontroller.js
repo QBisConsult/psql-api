@@ -73,7 +73,9 @@ module.exports = {
 		return res.send({id:process.rapidcfg.rapidid,isnew:process.rapidcfg.isnew,action:action=1});
 	},
 	setup: function (req,res,cfg){
+		
 		if(!ipr.checkip(req,process.rapidcfg.ipallow)){return res.status(401).send({message:"error",error:"access allowed by IP"})}
+		
 		function cb(err,data){
 			client.end();
 			delete client;
@@ -95,6 +97,9 @@ module.exports = {
 					if (err.errno == 'ENOTFOUND'){
 						errmsg ="Invalid domain address or port";
 					};
+					if (err.errno == 'ETIMEDOUT'){
+						errmsg ="Domain address or port can not be found";
+					};
 				}
 				
 				return res.send({error:"connection error",errmsg:errmsg})
@@ -105,7 +110,7 @@ module.exports = {
 		};
 		var ck = utils.checkadmpwd(req,process.rapidcfg.suser,process.rapidcfg.spwd);
 		if (ck.message != "OK"){return res.send({error:ck.error})}
-		console.log(req.body);
+		//console.log(req.body);
 		if (!req.body){return res.send({error:"Body required"})};
 		if (!req.body.domain){return res.send({error:"domain required"})};
 		if (!req.body.port){return res.send({error:"port required"})};
@@ -113,7 +118,7 @@ module.exports = {
 		if (!req.body.usern){return res.send({error:"usern required"})};
 		if (!req.body.pwd){return res.send({error:"pwd required"})};
 		var cstring = "postgres://"+req.body.usern+":"+req.body.pwd+"@"+req.body.domain+":"+req.body.port+"/"+req.body.db
-		console.log(cstring);
+		//console.log(cstring);
 		if (!req.body.action){
 			var client = new pg.Client(cstring);
 			client.connect(cb);
