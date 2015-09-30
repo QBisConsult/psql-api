@@ -25,6 +25,7 @@
   </div><br>
   <span ng-show="showerror" style="color:red"> Errors: (server reported)</span>
   <span ng-show="showerror" style="color:green">{{pubmessage}}</span>
+  <div style="position:absolute;padding-top:20px;height:95%;width:95%;">
   <div class="div-cnt4" style="height:200px;width:100%;border: 0px solid" ng-show = "showerror">
 		<div ng-model="cerr" 
 			ui-ace="{
@@ -37,7 +38,7 @@
 			  onLoad: aceLoaded2
 			}" ></div> 
   </div>
-  <div class="div-cnt4" style="position:absolute;padding-top:20px;height:95%;width:95%;border: 0px solid" ng-show = "showcode">
+  <div class="div-cnt4" style="border: 0px solid" ng-show = "showcode">
 		<div ng-model="ccode" ng-change="changecode()" 
 			ui-ace="{
 			  useWrapMode : true,
@@ -48,6 +49,7 @@
 			  firstLineNumber: 1,
 			  onLoad: aceLoaded2
 			}" ></div> 
+  </div>
   </div>
   <div class="div-cnt4" style="background:solid height:530px;width:100%;border: 0px solid;color:grey" ng-show = "showhelp">
   	<p>&nbsp</p>
