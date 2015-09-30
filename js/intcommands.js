@@ -92,7 +92,7 @@ module.exports = {
 		var msgsend = false;
 		var file = fs.readFileSync(process.env.mpath+'js/jsedit-psql/'+ce+'.js');
 		fs.writeFileSync('js/testjs.js',file);
-		child = exec('node js/test2.js');
+		child = exec('node js/testjs.js');
 		child.stdout.on('data', function(data) {
 		    console.log(data);
 		});
