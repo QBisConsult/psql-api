@@ -28,7 +28,6 @@ r.use(cors()); // Enable CORS
 
 console.reset = function (){return process.stdout.write('\033c')};console.reset();
 function mbr(rp){var nsl = rp.search("/");if(nsl==-1){return rp}else{return rp.slice(0,nsl)}};
-console.reset();
 
 // Routes:
 
@@ -55,9 +54,17 @@ r.all('/rapid/*',function(req,res){
 	function action(ce){rapid.command(req,res)};ct(req,res,action)});
 
 // SETUP
+
+if(!process.env.mpath){
+	process.env.mpath="";
+	process.env.ismodule=false;
+	cfg.checkstruct();
+};
+
 process.rapidcfg 	 = cfg.rapidcfg();
 process.rapidcfg.env 	 = cfg.rapidenv();
-process.rapidcfg.ipallow = JSON.parse(fs.readFileSync('ipallow.json').toString())
+process.rapidcfg.ipallow = JSON.parse(fs.readFileSync(process.env.mpath+'ipallow.json').toString())
+
 cfg.checkssl(load_dbinf)
 
 function load_dbinf(err){
@@ -67,9 +74,10 @@ function load_dbinf(err){
 };
 
 function start(){
+	
 	var sslOptions 	= {
-	  key: fs.readFileSync('./ssl/service.key'),
-	  cert: fs.readFileSync('./ssl/service.crt'),
+	  key: fs.readFileSync(process.env.mpath+'ssl/service.key'),
+	  cert: fs.readFileSync(process.env.mpath+'ssl/service.crt'),
 	  rejectUnauthorized: false
 	};
 	var https  	= require('https').Server(sslOptions,app);

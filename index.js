@@ -17,16 +17,24 @@ exports.start = function(){
 		start();
 	};
 	function start(){
-		child = exec('node kdman.js',{cwd:'node_modules/kdman/'});
-		child.stdout.on('data', function(data) {
-		    console.log(data);
-		});
-		child.stderr.on('data', function(data) {
-		    error(data);
-		});
-		child.on('close', function(code) {
-		    if (code>0){reset()} else {console.log('closing code: ',code)};
-		});
+		var cfg = require('./js/config.js');
+		process.env.ismodule = true;
+		process.env.mpath="";
+		cfg.checkstruct();
+		cfg.checkssl(go);
+		function go(err){
+			child = exec('node kdman.js',{cwd:'node_modules/psql-api/',env:{ismodule:true,mpath:process.cwd()+'/'}});
+			
+			child.stdout.on('data', function(data) {
+			    console.log(data);
+			});
+			child.stderr.on('data', function(data) {
+			    error(data);
+			});
+			child.on('close', function(code) {
+			    if (code>0){reset()} else {console.log('closing code: ',code)};
+			});
+		};
 	};
 	start();
 }

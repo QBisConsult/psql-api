@@ -1,7 +1,6 @@
 var exec = require('child_process').exec;
 var fs = require('fs');
 var child = "";
-
 function error(data){
 	console.log(data);
 	var d = new Date();
@@ -17,7 +16,6 @@ function error(data){
 function reset(){
 	start();
 };
-
 function start(){
 	child = exec('node kdman.js');
 	child.stdout.on('data', function(data) {
@@ -30,5 +28,6 @@ function start(){
 	    if (code>0){reset()} else {console.log('closing code: ',code)};
 	});
 };
-
 start();
+
+

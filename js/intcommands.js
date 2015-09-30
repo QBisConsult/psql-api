@@ -12,14 +12,11 @@ var crc	  = require('buffer-crc32');
 var jwt   = require('jsonwebtoken');
 
 module.exports = {
-	echo: function(req,res){
-		res.send({message:"OK"});
-	},
 	saveiplist: function(req,res){
-		//console.log(req.body.aip)
+		console.log(req.body.aip)
 		var file = req.body.aip;
 		process.rapidcfg.ipallow = JSON.parse(req.body.aip);
-		fs.writeFileSync('ipallow.json',file);
+		fs.writeFileSync(process.env.mpath+'ipallow.json',file);
 		res.send({message:"OK"});
 	},
 	ipallowlist: function(req,res){
@@ -79,7 +76,7 @@ module.exports = {
 	pubjs: function(req,res){
 		if (!req.body.fid){return res.status(404).send({message:"error",error:"incomplete request"})}
 		var ce = req.body.fid;
-		var file = fs.readFileSync('js/work/'+ce+'.js');
+		var file = fs.readFileSync(process.env.mpath+'js/jsedit-psql/'+ce+'.js');
 		fs.writeFileSync('js/'+ce+'.js',file);
 		res.send({message:"OK"});
 		process.exit(9);
@@ -93,7 +90,7 @@ module.exports = {
 		var fs = require('fs');
 		var child = "";
 		var msgsend = false;
-		var file = fs.readFileSync('js/work/'+ce+'.js');
+		var file = fs.readFileSync(process.env.mpath+'js/jsedit-psql/'+ce+'.js');
 		fs.writeFileSync('js/testjs.js',file);
 		child = exec('node js/test2.js');
 		child.stdout.on('data', function(data) {
@@ -119,13 +116,13 @@ module.exports = {
 		  port:req.body.p1,
 		  start:req.body.p0
 		}
-		fs.writeFileSync('env.json', JSON.stringify(c,null,2));
+		fs.writeFileSync(process.env.mpath+'env.json', JSON.stringify(c,null,2));
 		process.rapidcfg.env = c;
 		res.send({message:"OK"});
 		process.exit(9);
 	},
 	savessl: function(req,res){
-		//console.log(req.body);
+		console.log(req.body);
 		if (!req.body.c){return res.status(404).send({message:"error",error:"incomplete request"})}
 		if (!req.body.k){return res.status(404).send({message:"error",error:"incomplete request"})}
 		pem.readcertificate(req.body.c, read)
@@ -135,21 +132,21 @@ module.exports = {
 		};
 		function final(err,data){
 			if (err){return res.send({message:"error",error:"invalid key"})}
-			var oldcrt = fs.readFileSync('ssl/service.crt').toString();
-			var oldkey = fs.readFileSync('ssl/service.key').toString();
-			fs.writeFileSync('ssl/bkp/service.crt', oldcrt);
-			fs.writeFileSync('ssl/bkp/service.key', oldkey);
-			fs.writeFileSync('ssl/service.crt', req.body.c);
-			fs.writeFileSync('ssl/service.key', req.body.k);
+			var oldcrt = fs.readFileSync(process.env.mpath+'ssl/service.crt').toString();
+			var oldkey = fs.readFileSync(process.env.mpath+'ssl/service.key').toString();
+			fs.writeFileSync(process.env.mpath+'ssl/bkp/service.crt', oldcrt);
+			fs.writeFileSync(process.env.mpath+'ssl/bkp/service.key', oldkey);
+			fs.writeFileSync(process.env.mpath+'ssl/service.crt', req.body.c);
+			fs.writeFileSync(process.env.mpath+'ssl/service.key', req.body.k);
 			res.send({message:"OK"})
-			//console.log('exit');
+			console.log('exit');
 			process.exit(9);
 		};
 	},
 	getsslinfo: function(req,res){
 		var d1 = new Date()
 		var d2 = new Date()
-		var crt = fs.readFileSync('./ssl/service.crt').toString()
+		var crt = fs.readFileSync(process.env.mpath+'ssl/service.crt').toString()
 		pem.readcertificate(crt, read)
 		function read(err,crt){
 			d1.setTime(crt.validity.start);
@@ -176,7 +173,7 @@ module.exports = {
 			isnew:process.rapidcfg.isnew,
 			etk:process.rapidcfg.etk
 		};
-		fs.writeFileSync('config.json', JSON.stringify(c,null,2));
+		fs.writeFileSync(process.env.mpath+'config.json', JSON.stringify(c,null,2));
 		return res.send({message:"OK"});
 		
 	},
@@ -187,7 +184,7 @@ module.exports = {
 			if (err){return res.status(404).send({message:"error",error:err})}
 			return res.send({message:"OK",file:data})
 		};
-		fs.writeFile('js/work/'+req.body.fid+'.js', req.body.file, writefile)
+		fs.writeFile(process.env.mpath+'js/jsedit-psql/'+req.body.fid+'.js', req.body.file, writefile)
 	},
 	getjs: function(req,res){
 		var ce = req.query.atr;
@@ -205,14 +202,14 @@ module.exports = {
 			fl1=filedata1;
 			fs.readFile('js/'+ce+'.js', readback2)
 		};
-		fs.readFile('js/work/'+ce+'.js', readback1)
+		fs.readFile(process.env.mpath+'js/jsedit-psql/'+ce+'.js', readback1)
 	},	
 	reset: function(req,res){
 		res.send({message:"OK",reset:"now"});
 		process.exit(9);		
 	},
 	validatesql: function(req,res){
-		//console.log(req.body);
+		console.log(req.body);
 		function final(err,result){
 			if (err){return res.status(404).send(err)};
 			var mts = process.rapidcfg.mdb.esqls[req.body.queryname];
@@ -448,7 +445,7 @@ module.exports = {
 				dbid:process.rapidcfg.mdb.databases[req.body.db].id}
 			sqlstat ='insert into sqls (id,sqlname,sqlstat,inuse,"createdAt", "updatedAt",deleted,dbid)';
 			sqlstat = sqlstat + " values ("+utils.k2l(f)+")";
-			//console.log(sqlstat);
+			console.log(sqlstat);
 			client.query(sqlstat,function(err, result){
 				client.end();
 				if (err) {
