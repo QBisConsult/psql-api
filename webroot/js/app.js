@@ -988,7 +988,7 @@ app
   			if(ce=='int'){url=url+p.value} else {url=url+'val'};
   		});
   		url = url + '&offset=0&limit=0';
-  		if (ce=='rapid'){$scope.runstat = angular.toJson({url:url}, true)};
+  		//if (ce=='rapid'){$scope.runstat = angular.toJson({url:url}, true)};
   		return url;
   	};
   	$scope.testrun = function(){
