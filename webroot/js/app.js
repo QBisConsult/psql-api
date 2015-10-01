@@ -1029,6 +1029,16 @@ app
 	    _editor.$blockScrolling = Infinity;
 	    $scope.acedit = _editor;
 	  };
+	  $scope.aceLoaded0 = function(_editor) {
+	    // Options
+	    console.log('ACE loaded...');
+	    //_editor.renderer.setShowGutter(true);
+	    //_editor.setShowInvisibles(true);
+	    _editor.setReadOnly(true);
+	    _editor.setFontSize(16);
+	    _editor.$blockScrolling = Infinity;
+	    $scope.acedit = _editor;
+	  };
   	
   	$scope.sc_cancel = function(){
   		//console.log('cancel');
