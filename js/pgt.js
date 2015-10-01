@@ -57,6 +57,7 @@ module.exports = {
 				}
 			}
 			var conString = cstring + cdata;
+			client.end();
 			client = new pg.Client(conString);
 			client.connect(cde);
 		};

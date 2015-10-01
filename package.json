@@ -1,12 +1,15 @@
 {
   "name": "psql-api",
-  "version": "1.0.0",
+  "version": "0.9.1",
   "description": "Postgres database access API",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Adrian Patrascu",
+  "author": {
+    "name": "Adrian Patrascu",
+    "email": "adrian@qbis.ro"
+  },
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.14.0",
