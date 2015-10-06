@@ -4,7 +4,7 @@ RAPID RESTful API for PostgreSQL
 INSTALLATION
 
 Requirements:
-- Linux
+- OS: Linux, Windows 
 - NodeJS
 - OpenSSL should be installed before in order to allow the server to create it's first self-signed SSL certificate.
 - Tested with Posgresql 9.3 and up
