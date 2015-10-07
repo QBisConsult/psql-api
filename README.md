@@ -1,7 +1,9 @@
 # psql-api
 RAPID RESTful API for PostgreSQL
 
-INSTALLATION
+INSTALLATION  ( install local is required  --save)
+
+              npm install psql-api --save
 
 Requirements:
 - OS: Linux, Windows 
@@ -13,11 +15,7 @@ Requirements:
                sudo apt-get install libcap2-bin
                sudo setcap cap_net_bind_service=+ep /usr/local/bin/node
 
-Install with npm (required --save option)
-
-              sudo npm install psql-api --save
-
-sample new server code:
+sample new server.js code:
 
               server = require("psql-api");
               server.start();
