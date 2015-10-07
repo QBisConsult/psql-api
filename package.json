@@ -1,6 +1,6 @@
 {
   "name": "psql-api",
-  "version": "0.9.3",
+  "version": "0.9.4",
   "description": "Postgres database access API",
   "main": "index.js",
   "scripts": {
@@ -9,6 +9,10 @@
   "author": {
     "name": "Adrian Patrascu",
     "email": "adrian@qbis.ro"
+  },
+  "repository" : { 
+    "type" : "git"
+  , "url" : "https://github.com/QBisConsult/psql-api.git"
   },
   "license": "MIT",
   "dependencies": {
