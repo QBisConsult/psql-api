@@ -24,7 +24,8 @@ sample new server code:
 
 
 Install from git as standalone server:
-git clone https://github.com/QBisConsult/psql-api.git
+
+              git clone https://github.com/QBisConsult/psql-api.git
 
 Run this inside the new server folder:   
 
