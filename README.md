@@ -14,9 +14,11 @@ Requirements:
                sudo setcap cap_net_bind_service=+ep /usr/local/bin/node
 
 Install with npm
+
               sudo npm install psql-api
 
 sample new server code:
+
               server = require("psql-api");
               server.start();
 
