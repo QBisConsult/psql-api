@@ -13,8 +13,15 @@ Requirements:
                sudo apt-get install libcap2-bin
                sudo setcap cap_net_bind_service=+ep /usr/local/bin/node
 
+Install with npm
+              sudo npm install psql-api
 
-Install from git:
+sample new server code:
+              server = require("psql-api");
+              server.start();
+
+
+Install from git as standalone server:
 git clone https://github.com/QBisConsult/psql-api.git
 
 Run this inside the new server folder:   
