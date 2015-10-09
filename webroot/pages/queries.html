@@ -28,11 +28,12 @@
 			<!--<a ng-click="">SQL</a>&nbsp|&nbsp -->
 			<a ng-click="showrun()">RUN</a>&nbsp|&nbsp
 			<a ng-click="sqladdnew()">ADD NEW</a>&nbsp|&nbsp
+			<a ng-click="show_delete(true)">DELETE</a>&nbsp|&nbsp
 			<a ng-click="showhelp(true)">HELP</a>&nbsp|&nbsp
 			<span style="color:coral" ng-hide="csql.inuse">* not validated SQL, press RUN and then VALIDATE when tested OK<span>
 			</p>
 			<div class="div-cnt1">
-				<p>&nbspData:
+				<p>&nbspDb:
 				<select name="repeatSelect" ng-model="csql.db" ng-change="qncheck(csql.queryname)" placeholder="Database">
 					<option ng-repeat="option in dbslist" value="{{option}}">{{option}}</option>
 				</select>
@@ -43,6 +44,13 @@
 				&nbsp&nbsp&nbsp&nbsp <span style="color:red">{{inerr}}</span>
 				&nbsp&nbsp<span style="color:navy">{{spars}}</span>
 				<p></p>
+				<div ng-show="showdelete">
+				  	<p style="color:red">Confirm delete query: {{csql.queryname}} &nbsp&nbsp&nbsp&nbsp
+				  	<span style="color:lightblue">|</span>&nbsp
+				  	<a ng-click="sqldelete()">DELETE</a>&nbsp<span style="color:lightblue">|</span>&nbsp
+				  	<a ng-click="show_delete(false)">CANCEL</a>&nbsp<span style="color:lightblue">|</span>
+				  	</p>
+				</div>
 				<div ng-style="edth">
 					<div ng-model="csql.sqlstat" ng-change="sqlcheck(csql.sqlstat)" 
 						ui-ace="{

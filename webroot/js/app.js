@@ -945,7 +945,7 @@ app
   	$scope.srvdbs = [];
   	$scope.dbslist = $rootScope.mdb.databases.names;
   	$scope.add_dbname = "";
-  	$scope.csql = {queryname:"",sqlstat:"",id:"new",db:"",inuse:true};
+  	$scope.csql = {queryname:"",sqlstat:"",id:"new",db:"",inuse:false};
   	$scope.savecsql = angular.copy($scope.csql);
   	$scope.inerr = "";
   	$scope.spars = "";
@@ -958,7 +958,9 @@ app
   	$scope.runstat = "";
   	$scope.runtestmsg = "";
   	$scope.queryisok = false;
+  	$scope.showdelete = false;
   	// query functions
+  	$scope.show_delete = function(ce){$scope.showdelete = ce};
   	$scope.validatesql = function(){
   		//console.log("VALIDATE SQL");
   		//B3CS0Q9RJGPCWS
@@ -1007,7 +1009,39 @@ app
   		var req = {method: 'GET',url: url,data:$scope.csql};
 		gms($http,req,localStorage.ast,final);
   	};
+  	$scope.sqldelete = function(){
+  		$scope.showdelete = false;
+  		if ($scope.csql.id == 'new'){
+  			$rootScope.mdb.queries.forEach(function(item){
+  				if (item.queryname==$scope.csql.queryname){
+  					$scope.csql.id = item.id;
+  				}
+  			});
+  		};
+  		if ($scope.csql.id == 'new'){return $scope.csql = {queryname:"",sqlstat:"",id:"new",db:"",inuse:false}};
+  		function final(err,response){
+  		
+  			if(err){}
+  			if(response){
+  				delete $rootScope.mdb.sqls[$scope.csql.queryname]
+  				delete $rootScope.mdb.esqls[$scope.csql.queryname]
+  				var i = 0;
+  				$rootScope.mdb.queries.forEach(function(item){
+  					
+  					if (item.id == $scope.csql.id){
+  						console.log(item);
+  						$rootScope.mdb.queries.splice(i);
+  					};
+  					i++
+  				});
+  				$scope.csql = {queryname:"",sqlstat:"",id:"new",db:"",inuse:false};
+  			}
+  		};
+  		var req = {method: 'POST',url: $rootScope.baseurl+'int/deletesql',data:$scope.csql};
+  		gms($http,req,localStorage.ast,final);
+  	};
   	$scope.cancelrun = function(){
+  		$scope.showdelete = false;
   		$scope.edth = {"height":"100%"};
   		$scope.shrun = false;
   		$scope.runstat = "";
@@ -1015,6 +1049,7 @@ app
   		$scope.queryisok  = false;
   	};
   	$scope.showrun = function(){
+  		$scope.showdelete = false;
   		$scope.queryisok  = false;
   		$scope.edth = {"height":"40%"};
   		$scope.shrun = true;
@@ -1041,6 +1076,7 @@ app
 	  };
   	
   	$scope.sc_cancel = function(){
+  		$scope.showdelete = false;
   		//console.log('cancel');
   		$scope.inerr = "";
   		$scope.runtestmsg = "";
@@ -1050,6 +1086,7 @@ app
   		
   	};
   	$scope.sqlcheck = function(s){
+  		$scope.showdelete = false;
   		if (s == $scope.savecsql.sqlstat){$scope.smod = false} else {
   			$scope.queryisok = false;
   			$scope.smod = true};
@@ -1075,6 +1112,7 @@ app
   		if ($rootScope.mdb.sqls[rq] && $scope.csql.id != $rootScope.mdb.sqls[rq].id){$scope.inerr = rq + " - Query name exist!"};
   	};
   	$scope.qsel = function(q){
+  		$scope.showdelete = false;
   		$scope.helpmode = false;
   		if ($scope.smod){ return $scope.inerr = "There are changes, please press SAVE or CANCEL before other selection!"}
   		$scope.smod = false;
@@ -1090,6 +1128,7 @@ app
   		$scope.cancelrun();
   	};
   	$scope.sqlcreate = function(){
+  		$scope.showdelete = false;
   		//console.log("SQL ADD");
   		//$scope.csql.db="hr" // test data
   		if ($scope.csql.db.length === 0){return $scope.inerr = "Database name is required. Select a database first!"};
@@ -1110,6 +1149,7 @@ app
   	};
   	
   	$scope.sqlsave = function(){
+  		$scope.showdelete = false;
   		$scope.queryisok  = false;
   		//console.log('csql',$scope.csql);
   		$scope.qncheck($scope.csql.queryname);
@@ -1131,11 +1171,12 @@ app
   				newrec.inuse = false;
   				$scope.csql.inuse = false;
   				$scope.runtestmsg = "";
-  				//$rootScope.mdb.queries.push(newrec);
   				$rootScope.mdb.queries.forEach(function(item){
   					if (item.id == $scope.csql.id){
   						item.queryname = $scope.csql.queryname;
   						item.inuse = false;
+  						
+  						$scope.qsel(item);
   					};
   				});
   			}
@@ -1144,18 +1185,20 @@ app
 		gms($http,req,localStorage.ast,final);
   	};
   	$scope.showhelp = function(x){
+  		$scope.showdelete = false;
   		//console.log('HELP');
   		$scope.helpmode = x
   		if(x){$scope.qurl('rapid')}};
   		//console.log($scope.helpmode)
   	$scope.sqladdnew = function(){
+  		$scope.showdelete = false;
   		$scope.helpmode = false;
   		$scope.smod = true;
   		$scope.csql.queryname = "new";
   		$scope.csql.sqlstat = "";
   		$scope.csql.id = "new";
   		$scope.csql.db = "";
-  		$scope.csql.inuse = true;
+  		$scope.csql.inuse = false;
   		$scope.cancelrun();
   	};
   	//

@@ -12,8 +12,34 @@ var crc	  = require('buffer-crc32');
 var jwt   = require('jsonwebtoken');
 
 module.exports = {
+	deletesql: function(req,res){
+		if (!req.body){return res.send({error:"body data required"})}
+		if (!req.body.id){return res.send({error:"id is required"})}
+		function final(err,rsp){
+			if (err){return res.status(401).send({error:err})}
+			if (req.body.inuse == false){
+				delete process.rapidcfg.mdb.esqls[req.body.queryname]
+			} else {
+				delete process.rapidcfg.mdb.sqls[req.body.queryname]
+			}
+			return res.send({message:rsp})
+		};
+		function cb(err,data){
+			//console.log(err);
+			client.query("delete from sqls where id = $1",[req.body.id],function(err, result){
+				client.end();
+				if (err) {
+					return final({message:"error",error:"can not delete",errmsg:err});
+				};
+				final(false,result);
+			});
+		};
+		var pars = utils.getdbpar();
+		var client = dbs.getclient(pars);
+		client.connect(cb)
+	},
 	saveiplist: function(req,res){
-		console.log(req.body.aip)
+		//console.log(req.body.aip)
 		var file = req.body.aip;
 		process.rapidcfg.ipallow = JSON.parse(req.body.aip);
 		fs.writeFileSync(process.env.mpath+'ipallow.json',file);
@@ -92,9 +118,9 @@ module.exports = {
 		var msgsend = false;
 		var file = fs.readFileSync(process.env.mpath+'js/jsedit-psql/'+ce+'.js');
 		fs.writeFileSync('js/testjs.js',file);
-		child = exec('node js/testjs.js');
+		child = exec('node js/test2.js');
 		child.stdout.on('data', function(data) {
-		    console.log(data);
+		    //console.log(data);
 		});
 		child.stderr.on('data', function(data) {
 		    //console.log(data);
@@ -122,7 +148,7 @@ module.exports = {
 		process.exit(9);
 	},
 	savessl: function(req,res){
-		console.log(req.body);
+		//console.log(req.body);
 		if (!req.body.c){return res.status(404).send({message:"error",error:"incomplete request"})}
 		if (!req.body.k){return res.status(404).send({message:"error",error:"incomplete request"})}
 		pem.readcertificate(req.body.c, read)
@@ -139,7 +165,7 @@ module.exports = {
 			fs.writeFileSync(process.env.mpath+'ssl/service.crt', req.body.c);
 			fs.writeFileSync(process.env.mpath+'ssl/service.key', req.body.k);
 			res.send({message:"OK"})
-			console.log('exit');
+			//console.log('exit');
 			process.exit(9);
 		};
 	},
@@ -209,7 +235,7 @@ module.exports = {
 		process.exit(9);		
 	},
 	validatesql: function(req,res){
-		console.log(req.body);
+		//console.log(req.body);
 		function final(err,result){
 			if (err){return res.status(404).send(err)};
 			var mts = process.rapidcfg.mdb.esqls[req.body.queryname];
