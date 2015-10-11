@@ -615,6 +615,7 @@ app
     };
 
     $scope.setfirstpass = function(tu,tp,rtp){
+        if (tp!=rtp){return $scope.errmsg = "Password do not match!"}
     	$scope.errmsg = "";
     	$scope.cms = "";
     	$scope.ls = 3;
