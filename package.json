@@ -1,6 +1,6 @@
 {
   "name": "psql-api",
-  "version": "0.9.7",
+  "version": "0.9.8",
   "description": "Postgres database access API",
   "main": "index.js",
   "scripts": {

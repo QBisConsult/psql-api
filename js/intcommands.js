@@ -13,10 +13,10 @@ var jwt   = require('jsonwebtoken');
 
 module.exports = {
 	deletesql: function(req,res){
-		if (!req.body){return res.send({error:"body data required"})}
-		if (!req.body.id){return res.send({error:"id is required"})}
+		if (!req.body){return res.status(404).send({error:"body data required"})}
+		if (!req.body.id){return res.status(404).send({error:"id is required"})}
 		function final(err,rsp){
-			if (err){return res.status(401).send({error:err})}
+			if (err){return res.status(404).send({error:err})}
 			if (req.body.inuse == false){
 				delete process.rapidcfg.mdb.esqls[req.body.queryname]
 			} else {
@@ -386,11 +386,11 @@ module.exports = {
 		}
 	},
 	savesql: function(req,res){
-		if (!req.body){return res.send({message:"error",error:"csql data required"})};
-		if (!req.body.queryname){return res.send({message:"error",error:"queryname required"})};
-		if (!req.body.sqlstat){return res.send({message:"error",error:"sqlstat required"})};
-		if (!req.body.db){return res.send({message:"error",error:"db required"})};
-		if (!req.body.id){return res.send({message:"error",error:"id required"})};
+		if (!req.body){return res.status(404).send({message:"error",error:"csql data required"})};
+		if (!req.body.queryname){return res.status(404).send({message:"error",error:"queryname required"})};
+		if (!req.body.sqlstat){return res.status(404).send({message:"error",error:"sqlstat required"})};
+		if (!req.body.db){return res.status(404).send({message:"error",error:"db required"})};
+		if (!req.body.id){return res.status(404).send({message:"error",error:"id required"})};
 		function final(err,response){
 			if(err){return res.send(err)};
 			var psd = utils.findobjectbyval(process.rapidcfg.mdb.esqls,"id",req.body.id);
@@ -409,7 +409,7 @@ module.exports = {
 			if(response){return res.send({message:"OK",item:process.rapidcfg.mdb.esqls[req.body.queryname],rsp:response})};
 		};
 		function cb(err,data){
-			if (err){client.end();return res.send({message:"error",error:"can not connect the database server"})}
+			if (err){client.end();return res.status(404).send({message:"error",error:"can not connect the database server"})}
 				var values = []
 				var sqlname = req.body.queryname.toLowerCase();
 				var sqlstat = req.body.sqlstat;
@@ -441,16 +441,16 @@ module.exports = {
 		
 	},
 	newsql: function(req,res){
-		if (!req.body){return res.send({message:"error",error:"csql data required"})};
-		if (!req.body.queryname){return res.send({message:"error",error:"queryname required"})};
-		if (!req.body.sqlstat){return res.send({message:"error",error:"sqlstat required"})};
-		if (!req.body.db){return res.send({message:"error",error:"db required"})};
-		if (!req.body.id){return res.send({message:"error",error:"id required"})};
+		if (!req.body){return res.status(404).send({message:"error",error:"csql data required"})};
+		if (!req.body.queryname){return res.status(404).send({message:"error",error:"queryname required"})};
+		if (!req.body.sqlstat){return res.status(404).send({message:"error",error:"sqlstat required"})};
+		if (!req.body.db){return res.status(404).send({message:"error",error:"db required"})};
+		if (!req.body.id){return res.status(404).send({message:"error",error:"id required"})};
 		req.body.queryname = req.body.queryname.toLowerCase();
 		var newid = utils.hash(req.body.queryname,26)
-		if (!process.rapidcfg.mdb.databases[req.body.db].id){return res.send({message:"error",error:"invalid db "+req.body.db})};
+		if (!process.rapidcfg.mdb.databases[req.body.db].id){return res.status(404).send({message:"error",error:"invalid db "+req.body.db})};
 		function final(err,response){
-			if(err){return res.send(err)};
+			if(err){return res.status(404).send(err)};
 			process.rapidcfg.mdb.esqls[req.body.queryname] = {
 				id:newid,
 				database:req.body.db,
@@ -460,7 +460,7 @@ module.exports = {
 			if(response){return res.send({message:"OK",item:process.rapidcfg.mdb.esqls[req.body.queryname],rsp:response})};
 		};
 		function cb(err,data){
-			if (err){client.end();return res.send({message:"error",error:"can not connect the database server"})}
+			if (err){client.end();return res.status(404).send({message:"error",error:"can not connect the database server"})}
 			var f = {id:newid,
 				sqlname:req.body.queryname.toLowerCase(),
 				sqlstat:req.body.sqlstat,
@@ -486,7 +486,7 @@ module.exports = {
 		client.connect(cb);
 	},
 	adddbs: function(req,res){
-		if (!req.body){return res.send({message:"error",error:"dbname is required"})};
+		if (!req.body){return res.status(404).send({message:"error",error:"dbname is required"})};
 		if (!req.body.dbname){return res.send({message:"error",error:"dbname is required"})};
 		function cb(err,data){
 			function final(err,result){
@@ -497,7 +497,7 @@ module.exports = {
 				return res.send({message:"OK",result:result})};
 			}
 			function cbs(err,data){
-				if (err){return res.send({message:"error",error:"can not connect the database server"})};
+				if (err){return res.status(404).send({message:"error",error:"can not connect the database server"})};
 				sqlstat ='insert into dbs (id,cfgid,database,dbtype,host, port,user_,password,"createdAt", "updatedAt",distributeddata)';
 				sqlstat = sqlstat + " values ('"+utils.hash(req.body.dbname.toLowerCase(),26)+"','default','"+req.body.dbname+"','pg','"+process.rapidcfg.host+"',"+process.rapidcfg.port+",'"+ process.rapidcfg.user+"','"+process.rapidcfg.password+"','" + utils.timeymd() +"','"+utils.timeymd()+"',0)";
 				//console.log(sqlstat);
@@ -510,7 +510,7 @@ module.exports = {
 		
 		
 			client = {};
-			if (err){return res.send({message:"error",error:"can not connect the database server"})};
+			if (err){return res.status(404).send({message:"error",error:"can not connect the database server"})};
 			var cstring = "postgres://"+process.rapidcfg.user+":"+process.rapidcfg.password+"@"+process.rapidcfg.host+":"+process.rapidcfg.port+"/"+process.rapidcfg.rapiddb;
 			//console.log(cstring);
 			var sclient = new pg.Client(cstring);
@@ -523,7 +523,7 @@ module.exports = {
 	},
 	getdbs:function(req,res){
 		function final(err,result){
-			if (err) {return res.send({message:"error",error:"can not connect the database server"})}
+			if (err) {return res.status(404).send({message:"error",error:"can not connect the database server"})}
 			//console.log(result)
 			var dbs = [];
 			result.rows.forEach(function(db){
@@ -534,7 +534,7 @@ module.exports = {
 			return res.send({message:"OK",data:dbs});
 		};
 		function cb(err,data){
-			if (err){client.end();return res.send({message:"error",error:"can not connect the database server"})}
+			if (err){client.end();return res.status(404).send({message:"error",error:"can not connect the database server"})}
 			var sqlstat = "SELECT datname FROM pg_database WHERE datistemplate = false";
 			client.query(sqlstat,function(err, result) {
 				client.end();
@@ -567,7 +567,7 @@ module.exports = {
 			nobj.dbuser = process.rapidcfg.user;
 			//console.log(JSON.stringify(nobj));
 			return res.send({result:"OK",mdb:nobj,env:process.rapidcfg.env});
-		} else {return res.send({error:"can not connect the database server",copt:copt})};
+		} else {return res.status(404).send({error:"can not connect the database server",copt:copt})};
 	},
 	reload:function(req,res,cfg){
 		process.rapidcfg.mdb={};
@@ -587,7 +587,7 @@ module.exports = {
 				nobj.port   = process.rapidcfg.port;
 				nobj.dbuser = process.rapidcfg.user;
 				return res.send({result:"OK",mdb:nobj});
-			} else {return res.send({error:"can not connect the database server",copt:copt})};
+			} else {return res.status(404).send({error:"can not connect the database server",copt:copt})};
 			//console.log(JSON.stringify(process.rapidcfg));
 		}
 		function cb(err,data){
@@ -609,7 +609,7 @@ module.exports = {
 							errmsg ="Invalid domain address or port";
 						};
 				}
-				return res.send({error:errmsg,errdata:err,copt:copt})};
+				return res.status(404).send({error:errmsg,errdata:err,copt:copt})};
 			cfg.loadmdb(process.rapidcfg,result);
 		}
 		var c = process.rapidcfg;
