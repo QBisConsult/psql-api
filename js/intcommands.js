@@ -73,10 +73,12 @@ module.exports = {
 		if (!req.body.tname){return res.status(404).send({message:"error",error:"incomplete request - tkname"})}
 		if (!req.body.token){return res.status(404).send({message:"error",error:"incomplete request - token"})}
 		function final(err,data){
+			console.log(err);
+			console.log(data);
 			client.end();
 			if (err){return res.status(404).send({message:"error",error:err})};
-			data.rows.forEach(function(row){
-				row.jwt = 'BEARER '+jwt.sign(JSON.parse(row.token),process.env.token_key);
+			data.forEach(function(row){
+				row.jwt = 'Bearer '+jwt.sign(JSON.parse(row.token),process.env.token_key);
 			});
 			res.send({message:"OK",saved:data});
 		};
@@ -241,7 +243,7 @@ module.exports = {
 			var mts = process.rapidcfg.mdb.esqls[req.body.queryname];
 			mts.inuse = true;
 			process.rapidcfg.mdb.sqls[req.body.queryname] = mts;
-			process.rapidcfg.mdb.esqls[req.body.queryname] = {} //delete ;
+			delete process.rapidcfg.mdb.esqls[req.body.queryname] //delete ;
 			//console.log(process.rapidcfg.mdb.sqls);
 			return res.send({message:"OK",result:result});
 		};
@@ -268,7 +270,6 @@ module.exports = {
 		//console.log(cstring);
 		var client = new pg.Client(cstring);
 		client.connect(cb);
-		
 	},
 	rpdquery: function(req,res){
 		var rcfg  = process.rapidcfg;
@@ -282,7 +283,15 @@ module.exports = {
 				iserr   = true;
 				return -1;
 				}
-			if (!iserr) {return res.send(response)};
+			if (!iserr) {
+				var testtoken = {
+					user:'test',
+					email:'test@test.com'
+				}
+				var testjwt = jwt.sign(testtoken,process.env.token_key);
+				response.testtoken = testjwt;
+				return res.send(response);
+			};
 		};
 		function seterror(error_name,desc,has_required){
 			err =	{error:error_name,
@@ -398,8 +407,8 @@ module.exports = {
 				psd = utils.findobjectbyval(process.rapidcfg.mdb.sqls,"id",req.body.id);
 			}
 			//console.log(psd);
-			process.rapidcfg.mdb.esqls[psd[0].objname] = {};
-			process.rapidcfg.mdb.sqls[psd[0].objname] = {};
+			delete process.rapidcfg.mdb.esqls[psd[0].objname];
+			delete process.rapidcfg.mdb.sqls[psd[0].objname];
 			process.rapidcfg.mdb.esqls[req.body.queryname] = {
 				id : req.body.id,
 				database:req.body.db,

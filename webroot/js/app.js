@@ -960,6 +960,8 @@ app
   	$scope.runtestmsg = "";
   	$scope.queryisok = false;
   	$scope.showdelete = false;
+  	$scope.testurl = "";
+  	$scope.showapitest = false;
   	// query functions
   	$scope.show_delete = function(ce){$scope.showdelete = ce};
   	$scope.validatesql = function(){
@@ -984,11 +986,16 @@ app
   		var req = {method: 'POST',url: $rootScope.baseurl+'int/validatesql',data:$scope.csql};
 		gms($http,req,localStorage.ast,final);
   	}
-  	$scope.qurl = function(ce){
+  	$scope.qurl = function(ce,h){
   		//console.log(ce);
-  		var url = $rootScope.baseurl+ce+'/rpdquery?csql='+$scope.csql.queryname;
+  		var burl = $rootScope.baseurl;
+  		if (ce == 'rapid'){
+  			if ($rootScope.rapicfg.protocol == 'HTTPS') {burl = $rootScope.rapicfg.protocol} else {burl = 'HTTP'}
+  			burl = burl + '://' + $location.host() + ':' + $rootScope.rapicfg.port + '/'
+  		}
+  		var url = burl+ce+'/rpdquery?csql='+$scope.csql.queryname;
   		$scope.params.forEach(function(p){url = url + '&' + p.par + '=';
-  			if(ce=='int'){url=url+p.value} else {url=url+'val'};
+  			if(h==1){url=url+p.value} else {url=url+'val'};
   		});
   		url = url + '&offset=0&limit=0';
   		//if (ce=='rapid'){$scope.runstat = angular.toJson({url:url}, true)};
@@ -998,10 +1005,16 @@ app
   		if ($scope.smod){return $scope.runtestmsg = "Please save changes first."};
   		$scope.runtestmsg = "....";
   		$scope.queryisok  = false;
-  		var url = $scope.qurl('int');
+  		var url = $scope.qurl('int',1);
   		function final(err,response){
-  			if(err){$scope.runtestmsg = "Response: ERROR";$scope.runstat=angular.toJson(err, true)}
+  			if(err){$scope.testurl = "";$scope.runtestmsg = "Response: ERROR";$scope.runstat=angular.toJson(err, true)}
   			if(response){
+  				$scope.testurl = $scope.qurl('rapid',1)+'&token='+response.data.testtoken;
+  				console.log($scope.testurl);
+  				//console.log(response.data);
+  				//$scope.testtoken = response.data.testtoken;
+  				$scope.showapitest = true;
+  				delete response.data.testtoken;
   				$scope.runstat = angular.toJson(response.data, true);
   				$scope.runtestmsg = "Response: OK";
   				if (!$scope.csql.inuse){$scope.queryisok  = true};
@@ -1011,6 +1024,7 @@ app
 		gms($http,req,localStorage.ast,final);
   	};
   	$scope.sqldelete = function(){
+  		$scope.showapitest = false;
   		$scope.showdelete = false;
   		if ($scope.csql.id == 'new'){
   			$rootScope.mdb.queries.forEach(function(item){
@@ -1042,6 +1056,7 @@ app
   		gms($http,req,localStorage.ast,final);
   	};
   	$scope.cancelrun = function(){
+  		$scope.showapitest = false;
   		$scope.showdelete = false;
   		$scope.edth = {"height":"100%"};
   		$scope.shrun = false;
@@ -1050,6 +1065,7 @@ app
   		$scope.queryisok  = false;
   	};
   	$scope.showrun = function(){
+  		$scope.showapitest = false;
   		$scope.showdelete = false;
   		$scope.queryisok  = false;
   		$scope.edth = {"height":"40%"};
@@ -1077,6 +1093,7 @@ app
 	  };
   	
   	$scope.sc_cancel = function(){
+  		$scope.showapitest = false;
   		$scope.showdelete = false;
   		//console.log('cancel');
   		$scope.inerr = "";
@@ -1087,6 +1104,7 @@ app
   		
   	};
   	$scope.sqlcheck = function(s){
+  		$scope.showapitest = false;
   		$scope.showdelete = false;
   		if (s == $scope.savecsql.sqlstat){$scope.smod = false} else {
   			$scope.queryisok = false;
@@ -1113,6 +1131,7 @@ app
   		if ($rootScope.mdb.sqls[rq] && $scope.csql.id != $rootScope.mdb.sqls[rq].id){$scope.inerr = rq + " - Query name exist!"};
   	};
   	$scope.qsel = function(q){
+  		$scope.showapitest = false;
   		$scope.showdelete = false;
   		$scope.helpmode = false;
   		if ($scope.smod){ return $scope.inerr = "There are changes, please press SAVE or CANCEL before other selection!"}
@@ -1189,7 +1208,7 @@ app
   		$scope.showdelete = false;
   		//console.log('HELP');
   		$scope.helpmode = x
-  		if(x){$scope.qurl('rapid')}};
+  		if(x){$scope.qurl('rapid',0)}};
   		//console.log($scope.helpmode)
   	$scope.sqladdnew = function(){
   		$scope.showdelete = false;
