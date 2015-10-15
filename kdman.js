@@ -6,25 +6,22 @@ var utils 	= require('./js/fgen.js');
 var rapid   	= require('./js/rapidcontroller');
 var kint	= require('./js/kicontroller');
 var cfg   	= require('./js/config.js');
-//var ct 		= require('./js/tokenAuth');
 var ct 		= require('./js/rpdauth.js');
 var cors 	= require('cors');
 var ipr		= require('./js/ipallow.js');
-var bodyParser  = require('body-parser')	
-//require('use-strict')
 
 //
 
 var admin_port	= 443;
 var webroot 	= './webroot';
 
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
-app.use(cors()); // Enable CORS
-
-r.use(bodyParser.urlencoded({ extended: false }))
-r.use(bodyParser.json())
 r.use(cors()); // Enable CORS
+r.use(require('skipper')());
+
+app.use(cors()); // Enable CORS
+app.use(require('skipper')());
+
+
 
 console.reset = function (){return process.stdout.write('\033c')};console.reset();
 function mbr(rp){var nsl = rp.search("/");if(nsl==-1){return rp}else{return rp.slice(0,nsl)}};

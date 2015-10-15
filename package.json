@@ -1,6 +1,6 @@
 {
   "name": "psql-api",
-  "version": "0.9.9",
+  "version": "0.9.10",
   "description": "Postgres database access API",
   "main": "index.js",
   "scripts": {
@@ -16,7 +16,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.14.0",
     "buffer-crc32": "^0.2.5",
     "cors": "^2.7.1",
     "debug": "^0.8.1",
@@ -26,6 +25,7 @@
     "pg": "^4.4.1",
     "pg-spice": "^2.0.1",
     "redis": "^0.12.1",
+    "skipper": "^0.5.8",
     "use-strict": "^1.0.1"
   }
 }
