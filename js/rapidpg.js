@@ -465,16 +465,16 @@ module.exports = {
 							var c_record = req.body.data[table_x][curent_record];
 							delete c_record.rpdstatus;
 							var ins_fields = dbs.get_fields(table_structure,primary_key,c_record,1,table_x); 
-							ins_fields[primary_key] = key_value
+							if(key_value){ins_fields[primary_key] = key_value}
 							if(!ins_fields.rapidinsertfields_error){
 								dbs.insert(connobj,table_x,ins_fields,0,rnext);
 							} else {rnext(ins_fields.rapidinsertfields_error,'')};
 						    }
 						    var bfunc = table_x+'Create'
 						    if (typeof rpdb.checkAll == 'function'){
-							rpdb.checkAll(req,req.query,checkrb);
-							} else {checkrb()}
-						    function checkrb(){
+							rpdb.checkAll(req,req.query,checkrb1);
+							} else {checkrb1()}
+						    function checkrb1(){
 					  		    if (typeof rpdb[bfunc] == 'function') {
 								rpdb[bfunc](req,req.body.data[table_x][curent_record],tinsert_record);
 							    } else { tinsert_record()}
